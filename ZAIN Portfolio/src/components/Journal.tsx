@@ -34,7 +34,7 @@ const entries = [
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 1, ease: [0.25, 0.1, 0.25, 1] },
+  transition: { duration: 1, ease: [0.25, 0.1, 0.25, 1] as const },
   viewport: { once: true, margin: "-100px" },
 };
 
@@ -83,7 +83,7 @@ export default function Journal() {
               transition={{
                 duration: 0.6,
                 delay: i * 0.08,
-                ease: [0.25, 0.1, 0.25, 1],
+                ease: [0.25, 0.1, 0.25, 1] as const,
               }}
               viewport={{ once: true, margin: "-50px" }}
               className="group flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 p-4 bg-surface/30 hover:bg-surface border border-stroke rounded-[40px] sm:rounded-full transition-all duration-300 cursor-pointer"

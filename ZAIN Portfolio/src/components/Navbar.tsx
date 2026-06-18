@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const links = ["Home", "Work", "Resume"];
+const links = ["Home", "About", "Services", "Work", "Process", "Contact"];
 
 export default function Navbar() {
   const [active, setActive] = useState("Home");
@@ -16,8 +16,11 @@ export default function Navbar() {
     setActive(label);
     const map: Record<string, string> = {
       Home: "hero",
+      About: "about",
+      Services: "services",
       Work: "works",
-      Resume: "stats",
+      Process: "process",
+      Contact: "contact",
     };
     const el = document.getElementById(map[label] || "hero");
     el?.scrollIntoView({ behavior: "smooth" });

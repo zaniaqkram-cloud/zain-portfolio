@@ -19,7 +19,7 @@ export default function Stats() {
               transition={{
                 duration: 0.8,
                 delay: i * 0.15,
-                ease: [0.25, 0.1, 0.25, 1],
+                ease: [0.25, 0.1, 0.25, 1] as const,
               }}
               viewport={{ once: true, margin: "-50px" }}
               className="text-center py-10 border border-stroke rounded-3xl bg-surface/30"

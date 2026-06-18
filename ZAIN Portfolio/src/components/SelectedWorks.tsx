@@ -34,7 +34,7 @@ const projects = [
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 1, ease: [0.25, 0.1, 0.25, 1] },
+  transition: { duration: 1, ease: [0.25, 0.1, 0.25, 1] as const },
   viewport: { once: true, margin: "-100px" },
 };
 
@@ -83,7 +83,7 @@ export default function SelectedWorks() {
               transition={{
                 duration: 0.8,
                 delay: i * 0.1,
-                ease: [0.25, 0.1, 0.25, 1],
+                ease: [0.25, 0.1, 0.25, 1] as const,
               }}
               viewport={{ once: true, margin: "-50px" }}
               className={`${p.span} group relative rounded-3xl overflow-hidden bg-surface border border-stroke cursor-pointer`}
