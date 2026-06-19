@@ -1,3 +1,4 @@
+import HeroVoronoiBackground from "./HeroVoronoiBackground";
 import { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 import gsap from "gsap";
@@ -64,14 +65,11 @@ export default function Hero() {
       ref={sectionRef}
       className="relative h-screen w-full overflow-hidden"
     >
-      <img
-  src="/hero-bg.svg"
-  alt="Hero Background"
-  className="absolute top-1/2 left-1/2 min-w-full min-h-full object-cover -translate-x-1/2 -translate-y-1/2"
-/>
+      <HeroVoronoiBackground />
 
       {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 pointer-events-none">
+
         <span className="blur-in text-xs text-muted uppercase tracking-[0.3em] mb-8">
           COLLECTION '26
         </span>
@@ -97,22 +95,25 @@ export default function Hero() {
         </p>
 
         {/* CTA Buttons */}
-        <div className="blur-in inline-flex gap-4">
+        <div className="blur-in inline-flex gap-4 pointer-events-auto">
           <a
             href="#works"
+            style={{ pointerEvents: "auto" }}
             className="group relative rounded-full text-sm px-7 py-3.5 bg-text-primary text-bg hover:bg-bg hover:text-text-primary transition-all duration-300 hover:scale-105 overflow-hidden"
           >
             <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative">See Works</span>
           </a>
           <a
-             href="mailto:zaniaqkram@gmail.com"
+            href="mailto:zaniaqkram@gmail.com"
+            style={{ pointerEvents: "auto" }}
             className="group relative rounded-full text-sm px-7 py-3.5 border-2 border-stroke bg-bg text-text-primary hover:border-transparent transition-all duration-300 hover:scale-105 overflow-hidden"
           >
             <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative">Reach out...</span>
           </a>
         </div>
+
       </div>
 
       {/* Scroll Indicator */}
@@ -127,4 +128,3 @@ export default function Hero() {
     </section>
   );
 }
-

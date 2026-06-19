@@ -1,191 +1,96 @@
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion, AnimatePresence } from "framer-motion";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
 const items = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=600&q=80",
-    title: "Abstract Flow",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1567095761054-7a02e69e5b2e?w=600&q=80",
-    title: "Geometric Light",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&q=80",
-    title: "Color Study",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1618556450991-2f1af64e8191?w=600&q=80",
-    title: "Digital Terrain",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?w=600&q=80",
-    title: "Neon Dreams",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=600&q=80",
-    title: "Fluid Motion",
-  },
+  { image: "https://unsplash.com", title: "Abstract Flow" },
+  { image: "https://unsplash.com", title: "Geometric Light" },
+  { image: "https://unsplash.com", title: "Color Study" },
+  { image: "https://unsplash.com", title: "Digital Terrain" },
+  { image: "https://unsplash.com", title: "Neon Dreams" },
+  { image: "https://unsplash.com", title: "Fluid Motion" },
 ];
 
 export default function Explorations() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const col1Ref = useRef<HTMLDivElement>(null);
-  const col2Ref = useRef<HTMLDivElement>(null);
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const targetRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Pin the center content
-      if (contentRef.current) {
-        ScrollTrigger.create({
-          trigger: contentRef.current,
-          start: "top center",
-          endTrigger: sectionRef.current,
-          end: "bottom center",
-          pin: true,
-          pinSpacing: false,
-        });
-      }
+  // Hook to track the scrolling progress of this section
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["top bottom", "bottom top"]
+  });
 
-      // Parallax columns
-      if (col1Ref.current) {
-        gsap.to(col1Ref.current, {
-          y: -200,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
-      }
-      if (col2Ref.current) {
-        gsap.to(col2Ref.current, {
-          y: -400,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
-      }
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
-
-  const col1 = items.slice(0, 3);
-  const col2 = items.slice(3, 6);
+  // Track 1 shifts upward moderately
+  const yColumnOne = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  // Track 2 shifts downward slowly
+  const yColumnTwo = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  // Track 3 shifts upward faster
+  const yColumnThree = useTransform(scrollYProgress, [0, 1], [0, -220]);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-[300vh] bg-bg overflow-hidden"
-    >
-      {/* Pinned Center Content */}
-      <div
-        ref={contentRef}
-        className="relative z-10 flex flex-col items-center justify-center h-screen text-center px-6"
-      >
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-px bg-stroke" />
-          <span className="text-xs text-muted uppercase tracking-[0.3em]">
-            Explorations
-          </span>
-        </div>
-        <h2 className="text-3xl md:text-5xl font-body font-light text-text-primary mb-3">
-          Visual <span className="font-display italic">playground</span>
-        </h2>
-        <p className="text-sm md:text-base text-muted max-w-md mb-8">
-          A collection of experimental visual work, personal projects, and
-          creative explorations.
-        </p>
-        <a
-          href="#"
-          className="group relative inline-flex items-center gap-2 rounded-full text-sm px-6 py-3 text-text-primary transition-all duration-300 hover:scale-105 overflow-hidden border border-stroke"
-        >
-          <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <span className="relative flex items-center gap-2 bg-bg rounded-full px-4 py-1">
-            Dribbble →
-          </span>
-        </a>
-      </div>
+    <section id="explorations" ref={targetRef} className="relative w-full bg-black py-20 md:py-32 overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
 
-      {/* Parallax Columns */}
-      <div className="absolute inset-0 z-20 pointer-events-none">
-        <div className="max-w-[1400px] mx-auto h-full grid grid-cols-2 gap-12 md:gap-40 px-6">
-          <div ref={col1Ref} className="flex flex-col gap-8 pt-[20vh]">
-            {col1.map((item, i) => (
-              <div
-                key={item.title}
-                onClick={() => setLightbox(i)}
-                className="pointer-events-auto cursor-pointer aspect-square max-w-[320px] rounded-2xl overflow-hidden border border-stroke bg-surface group transition-transform duration-500 hover:rotate-1"
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              </div>
-            ))}
+        {/* Static Content Header */}
+        <div className="mb-20 text-left">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-px bg-neutral-800" />
+            <span className="text-xs text-neutral-400 uppercase tracking-[0.3em]">Explorations</span>
           </div>
-          <div
-            ref={col2Ref}
-            className="flex flex-col gap-8 pt-[50vh] items-end"
-          >
-            {col2.map((item, i) => (
-              <div
-                key={item.title}
-                onClick={() => setLightbox(i + 3)}
-                className="pointer-events-auto cursor-pointer aspect-square max-w-[320px] rounded-2xl overflow-hidden border border-stroke bg-surface group transition-transform duration-500 hover:-rotate-1"
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              </div>
-            ))}
-          </div>
+          <h2 className="text-4xl md:text-6xl font-body font-light text-white mb-4">
+            Visual <span className="font-display italic text-[#C9A84C]">playground</span>
+          </h2>
+          <p className="text-sm md:text-base text-neutral-400 max-w-md">
+            A collection of experimental visual work, personal projects, and digital motion systems.
+          </p>
+        </div>
+
+        {/* ==========================================================
+            CHARN'S MULTI-COLUMN STAGGERED PARALLAX SCROLL GRID
+           ========================================================== */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+
+          {/* TRACK 1: Moves upward moderately */}
+          <motion.div style={{ y: yColumnOne }} className="flex flex-col gap-6">
+            <div onClick={() => setLightbox(0)} className="cursor-pointer group relative overflow-hidden rounded-2xl border border-neutral-900 aspect-[3/4]">
+              <img src={items[0].image} alt={items[0].title} className="w-full h-full object-cover brightness-[0.85] group-hover:brightness-100 transition-all duration-500 group-hover:scale-105" />
+            </div>
+            <div onClick={() => setLightbox(1)} className="cursor-pointer group relative overflow-hidden rounded-2xl border border-neutral-900 aspect-square">
+              <img src={items[1].image} alt={items[1].title} className="w-full h-full object-cover brightness-[0.85] group-hover:brightness-100 transition-all duration-500 group-hover:scale-105" />
+            </div>
+          </motion.div>
+
+          {/* TRACK 2: Moves downward slowly */}
+          <motion.div style={{ y: yColumnTwo }} className="flex flex-col gap-6 md:mt-12">
+            <div onClick={() => setLightbox(2)} className="cursor-pointer group relative overflow-hidden rounded-2xl border border-neutral-900 aspect-square">
+              <img src={items[2].image} alt={items[2].title} className="w-full h-full object-cover brightness-[0.85] group-hover:brightness-100 transition-all duration-500 group-hover:scale-105" />
+            </div>
+            <div onClick={() => setLightbox(3)} className="cursor-pointer group relative overflow-hidden rounded-2xl border border-neutral-900 aspect-[4/5]">
+              <img src={items[3].image} alt={items[3].title} className="w-full h-full object-cover brightness-[0.85] group-hover:brightness-100 transition-all duration-500 group-hover:scale-105" />
+            </div>
+          </motion.div>
+
+          {/* TRACK 3: Moves upward rapidly */}
+          <motion.div style={{ y: yColumnThree }} className="flex flex-col gap-6">
+            <div onClick={() => setLightbox(4)} className="cursor-pointer group relative overflow-hidden rounded-2xl border border-neutral-900 aspect-[3/2]">
+              <img src={items[4].image} alt={items[4].title} className="w-full h-full object-cover brightness-[0.85] group-hover:brightness-100 transition-all duration-500 group-hover:scale-105" />
+            </div>
+            <div onClick={() => setLightbox(5)} className="cursor-pointer group relative overflow-hidden rounded-2xl border border-neutral-900 aspect-square">
+              <img src={items[5].image} alt={items[5].title} className="w-full h-full object-cover brightness-[0.85] group-hover:brightness-100 transition-all duration-500 group-hover:scale-105" />
+            </div>
+          </motion.div>
+
         </div>
       </div>
 
-      {/* Lightbox */}
+      {/* Lightbox Pop-Up */}
       <AnimatePresence>
         {lightbox !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setLightbox(null)}
-            className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-8 cursor-pointer"
-          >
-            <motion.img
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              src={items[lightbox].image}
-              alt={items[lightbox].title}
-              className="max-w-full max-h-full rounded-2xl object-contain"
-            />
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setLightbox(null)} className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-8 cursor-pointer">
+            <motion.img initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }} src={items[lightbox].image} alt={items[lightbox].title} className="max-w-full max-h-full rounded-2xl object-contain border border-neutral-800" />
           </motion.div>
         )}
       </AnimatePresence>
     </section>
   );
 }
-

@@ -1,10 +1,12 @@
+import { CometCard } from "./comet-card";
 import { motion } from "framer-motion";
 
 export default function About() {
   return (
-    <section id="about" className="bg-bg py-16 md:py-24">
+    <section id="about" className="bg-black py-16 md:py-24">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -12,10 +14,20 @@ export default function About() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="aspect-[4/5] rounded-3xl overflow-hidden border border-stroke bg-surface">
-              <div className="w-full h-full halftone opacity-10" />
-            </div>
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full accent-gradient opacity-20 blur-2xl" />
+            <CometCard className="w-full">
+              <div
+                className="aspect-[4/5] rounded-3xl overflow-hidden border border-stroke bg-surface"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                <img
+                  src="/zain-card.png"
+                  alt="Zain Akram"
+                  className="w-full h-full object-cover"
+                  style={{ transform: "translateZ(40px)" }}
+                />
+              </div>
+            </CometCard>
+            <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full accent-gradient opacity-20 blur-2xl pointer-events-none" />
           </motion.div>
 
           <motion.div
@@ -31,11 +43,11 @@ export default function About() {
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-body font-light text-text-primary mb-6">
-              Creative designer based in{" "}
+              Creative Designer based in{" "}
               <span className="font-display italic">Lahore</span>
             </h2>
             <p className="text-sm md:text-base text-muted leading-relaxed mb-6">
-              I'm Zain Akram — a multidisciplinary designer crafting digital
+              I'm Zain Akram - a multidisciplinary designer crafting digital
               experiences that blend thoughtful design with purposeful
               interaction. With expertise spanning UI/UX, brand identity, and
               video editing, I bring ideas to life through clean aesthetics and
@@ -56,6 +68,7 @@ export default function About() {
               </span>
             </a>
           </motion.div>
+
         </div>
       </div>
     </section>

@@ -46,12 +46,12 @@ const services: Service[] = [
 
 export default function Services() {
   return (
-    <section id="services" className="bg-bg py-16 md:py-24">
+    <section id="services" className="bg-black py-16 md:py-24">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const }}
+          transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const }}
           viewport={{ once: true, margin: "-100px" }}
           className="mb-12 md:mb-16"
         >

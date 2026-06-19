@@ -19,7 +19,8 @@ export default function App() {
         <LoadingScreen onComplete={() => setIsLoading(false)} />
       )}
       {!isLoading && (
-        <div>
+        <div className="bg-black min-h-screen w-full selection:bg-[#DC143C]/30">
+
           <Navbar />
           <Hero />
           <About />

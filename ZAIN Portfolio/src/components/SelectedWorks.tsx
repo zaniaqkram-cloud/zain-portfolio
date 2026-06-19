@@ -40,7 +40,7 @@ const fadeUp = {
 
 export default function SelectedWorks() {
   return (
-    <section id="works" className="bg-bg py-12 md:py-16">
+    <section id="works" className="bg-black py-12 md:py-16">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
         {/* Header */}
         <motion.div {...fadeUp} className="mb-10 md:mb-14">

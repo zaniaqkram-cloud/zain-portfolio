@@ -60,7 +60,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative bg-bg pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden"
+      className="relative bg-black pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden"
     >
       <div className="absolute inset-0 overflow-hidden">
         <video
