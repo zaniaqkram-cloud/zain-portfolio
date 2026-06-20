@@ -54,6 +54,12 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const { name, email, message } = formData;
+    const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+    );
+    window.location.href = `mailto:zaniaqkram@gmail.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 

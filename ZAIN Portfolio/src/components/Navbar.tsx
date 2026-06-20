@@ -73,7 +73,7 @@ export default function Navbar() {
 
         {/* Say hi */}
         <a
-          href="mailto:hello@michaelsmith.com"
+          href="mailto:zaniaqkram@gmail.com"
           className="group relative text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 text-text-primary overflow-hidden"
         >
           <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

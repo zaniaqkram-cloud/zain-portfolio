@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import LoadingScreen from "./components/LoadingScreen";
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import About from "./components/About";
-import Services from "./components/Services";
-//import SelectedWorks from "./components/SelectedWorks";
-//import Journal from "./components/Journal";
-import Process from "./components/Process";
-import Explorations from "./components/Explorations";
-import Contact from "./components/Contact";
+
+const Hero = lazy(() => import("./components/Hero"));
+const About = lazy(() => import("./components/About"));
+const Services = lazy(() => import("./components/Services"));
+const Process = lazy(() => import("./components/Process"));
+const Explorations = lazy(() => import("./components/Explorations"));
+const Contact = lazy(() => import("./components/Contact"));
+
+function SectionFallback() {
+  return <div className="h-96 bg-black" />;
+}
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,16 +23,25 @@ export default function App() {
       )}
       {!isLoading && (
         <div className="bg-black min-h-screen w-full selection:bg-[#DC143C]/30">
-
           <Navbar />
-          <Hero />
-          <About />
-          <Services />
-          {/* <SelectedWorks /> */}
-          {/* <Journal /> */}
-          <Process />
-          <Explorations />
-          <Contact />
+          <Suspense fallback={<SectionFallback />}>
+            <Hero />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <About />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <Services />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <Process />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <Explorations />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <Contact />
+          </Suspense>
         </div>
       )}
     </>
