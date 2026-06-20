@@ -1,4 +1,4 @@
-import HeroGlassBackground from "./HeroGlassBackground";
+import HeroVoronoiBackground from "./HeroVoronoiBackground";
 import { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 import gsap from "gsap";
@@ -65,7 +65,7 @@ export default function Hero() {
       ref={sectionRef}
       className="relative h-screen w-full overflow-hidden"
     >
-      <HeroGlassBackground />
+      <HeroVoronoiBackground />
 
       {/* Hero Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 pointer-events-none">
