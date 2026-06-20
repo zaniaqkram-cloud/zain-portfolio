@@ -70,7 +70,7 @@ export default function Hero() {
       {/* Hero Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 pointer-events-none">
 
-        <span className="blur-in text-xs text-muted uppercase tracking-[0.3em] mb-8">
+        <span className="blur-in text-xs text-white/60 uppercase tracking-[0.3em] mb-8">
           COLLECTION '26
         </span>
 
@@ -78,7 +78,7 @@ export default function Hero() {
           Zain Akram
         </h1>
 
-        <p className="blur-in text-base md:text-lg text-muted mb-4">
+        <p className="blur-in text-base md:text-lg text-white/60 mb-4">
           A{" "}
           <span
             key={roleIndex}
@@ -89,7 +89,7 @@ export default function Hero() {
           lives in Lahore.
         </p>
 
-        <p className="blur-in text-sm md:text-base text-muted max-w-md mb-12">
+        <p className="blur-in text-sm md:text-base text-white/60 max-w-md mb-12">
           Designing seamless digital interactions by focusing on the unique
           nuances which bring systems to life.
         </p>
