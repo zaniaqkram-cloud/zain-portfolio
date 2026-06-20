@@ -1,4 +1,4 @@
-import { CometCard } from "./comet-card";
+import { CometCard } from "./ui/comet-card";
 import { motion } from "framer-motion";
 
 export default function About() {
