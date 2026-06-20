@@ -25,8 +25,8 @@ export default function App() {
           <Hero />
           <About />
           <Services />
-          <SelectedWorks />
-          <Journal />
+          {/* <SelectedWorks /> */}
+          {/* <Journal /> */}
           <Process />
           <Explorations />
           <Contact />

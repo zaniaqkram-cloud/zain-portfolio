@@ -84,32 +84,31 @@ export default function Explorations() {
   return (
     <section id="explorations" className="relative w-full bg-black">
 
+      {/* ── Section Header ─────────────────────────────────────────────────── */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 pt-20 md:pt-32 pb-12">
+        <div className="mb-8 text-left">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-px bg-neutral-800" />
+            <span className="text-xs text-neutral-400 uppercase tracking-[0.3em]">
+              Explorations
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-body font-light text-white mb-2">
+            Visual{" "}
+            <span className="font-display italic text-[#C9A84C]">playground</span>
+          </h2>
+          <p className="text-sm md:text-base text-neutral-400 max-w-md">
+            A collection of experimental visual work, personal projects, and
+            digital motion systems.
+          </p>
+        </div>
+      </div>
+
       {/* ── Scroll Runway ────────────────────────────────────────────────────── */}
       <ContainerScroll className="bg-black">
 
         {/* ── Sticky Viewport Lock ─────────────────────────────────────────── */}
         <ContainerSticky>
-
-          {/* Section header — absolutely overlaid so it stays visible while
-              the gallery zooms in beneath it */}
-          <div className="absolute top-0 left-0 right-0 z-10 px-6 md:px-12 pt-10 md:pt-14 pointer-events-none">
-            <div className="max-w-[1400px] mx-auto">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-px bg-neutral-800" />
-                <span className="text-xs text-neutral-400 uppercase tracking-[0.3em]">
-                  Explorations
-                </span>
-              </div>
-              <h2 className="text-4xl md:text-5xl font-body font-light text-white mb-2">
-                Visual{" "}
-                <span className="font-display italic text-[#C9A84C]">playground</span>
-              </h2>
-              <p className="text-sm md:text-base text-neutral-400 max-w-md">
-                A collection of experimental visual work, personal projects, and
-                digital motion systems.
-              </p>
-            </div>
-          </div>
 
           {/* ── Gallery grid centered inside the sticky lock ────────────────── */}
           <GalleryContainer className="gap-4 p-4 w-full h-full">
