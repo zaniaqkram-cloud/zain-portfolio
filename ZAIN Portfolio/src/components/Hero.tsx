@@ -109,7 +109,7 @@ export default function Hero() {
             style={{ pointerEvents: "auto" }}
             className="group relative rounded-full text-sm px-7 py-3.5 border-2 border-stroke bg-bg text-text-primary hover:border-transparent transition-all duration-300 hover:scale-105 overflow-hidden"
           >
-            <span className="absolute inset-[-2px] rounded-full bg-[#DC143C] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative">Reach out...</span>
           </a>
         </div>

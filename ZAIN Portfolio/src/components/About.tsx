@@ -62,7 +62,7 @@ export default function About() {
               href="mailto:zaniaqkram@gmail.com"
               className="group relative inline-flex items-center gap-2 rounded-full text-sm px-6 py-3 text-text-primary transition-all duration-300 hover:scale-105 overflow-hidden border border-stroke"
             >
-              <span className="absolute inset-[-2px] rounded-full bg-[#DC143C] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <span className="relative flex items-center gap-2 bg-bg rounded-full px-4 py-1">
                 Let's talk ↗
               </span>
