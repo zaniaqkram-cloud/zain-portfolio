@@ -52,7 +52,7 @@ export default function Process() {
           </div>
           <h2 className="text-3xl md:text-5xl font-body font-light text-text-primary">
             How I{" "}
-            <span className="font-display italic">work</span>
+            <span className="font-display italic">Work</span>
           </h2>
         </motion.div>
 

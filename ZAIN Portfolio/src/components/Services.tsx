@@ -63,7 +63,7 @@ export default function Services() {
           </div>
           <h2 className="text-3xl md:text-5xl font-body font-light text-text-primary">
             Services &{" "}
-            <span className="font-display italic">expertise</span>
+            <span className="font-display italic">Expertise</span>
           </h2>
         </motion.div>
 
