@@ -39,32 +39,36 @@ const IMAGES_3 = [
 // its global index (col-1 images first, then col-2, then col-3).
 const ALL_IMAGES = [...IMAGES_1, ...IMAGES_2, ...IMAGES_3];
 
-// Aspect-ratio variants cycled per-column to keep the grid visually varied.
-const ASPECTS_1 = ["aspect-[3/4]", "aspect-square", "aspect-[4/5]", "aspect-[3/4]", "aspect-[4/3]", "aspect-square"];
-const ASPECTS_2 = ["aspect-square", "aspect-[4/5]", "aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-[4/5]"];
-const ASPECTS_3 = ["aspect-[3/2]", "aspect-square", "aspect-[3/4]", "aspect-[4/5]", "aspect-square", "aspect-[3/4]"];
+// Fixed card heights — consistent sizing across all 18 cards prevents
+// columns from becoming arbitrarily tall and keeps the grid compact.
+const HEIGHTS_1 = ["h-[280px]", "h-[320px]", "h-[260px]", "h-[300px]", "h-[280px]", "h-[320px]"];
+const HEIGHTS_2 = ["h-[300px]", "h-[260px]", "h-[320px]", "h-[280px]", "h-[260px]", "h-[300px]"];
+const HEIGHTS_3 = ["h-[260px]", "h-[300px]", "h-[280px]", "h-[320px]", "h-[300px]", "h-[260px]"];
 
 // ── Helper ────────────────────────────────────────────────────────────────────
 function GalleryCard({
   src,
   globalIndex,
-  aspectClass,
+  heightClass,
   onOpen,
 }: {
   src: string;
   globalIndex: number;
-  aspectClass: string;
+  heightClass: string;
   onOpen: (idx: number) => void;
 }) {
   return (
     <div
       onClick={() => onOpen(globalIndex)}
-      className={`cursor-pointer group relative overflow-hidden rounded-2xl border border-neutral-900 ${aspectClass}`}
+      className={`cursor-pointer group relative overflow-hidden rounded-2xl border border-neutral-900 w-full ${heightClass}`}
     >
+      {/* Skeleton shown while image loads */}
+      <div className="absolute inset-0 bg-neutral-900/50 animate-pulse" />
       <img
         src={src}
         alt={`Play ${globalIndex + 1}`}
-        className="w-full h-full object-cover brightness-[0.85] group-hover:brightness-100 transition-all duration-500 group-hover:scale-105"
+        loading="lazy"
+        className="relative w-full h-full object-cover brightness-[0.85] group-hover:brightness-100 transition-all duration-500 group-hover:scale-105"
       />
       <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <span className="text-sm font-body text-white/90">Play {globalIndex + 1}</span>
@@ -117,7 +121,7 @@ export default function Explorations() {
                   key={src}
                   src={src}
                   globalIndex={i}
-                  aspectClass={ASPECTS_1[i % ASPECTS_1.length]}
+                  heightClass={HEIGHTS_1[i % HEIGHTS_1.length]}
                   onOpen={setLightbox}
                 />
               ))}
@@ -130,7 +134,7 @@ export default function Explorations() {
                   key={src}
                   src={src}
                   globalIndex={IMAGES_1.length + i}
-                  aspectClass={ASPECTS_2[i % ASPECTS_2.length]}
+                  heightClass={HEIGHTS_2[i % HEIGHTS_2.length]}
                   onOpen={setLightbox}
                 />
               ))}
@@ -143,7 +147,7 @@ export default function Explorations() {
                   key={src}
                   src={src}
                   globalIndex={IMAGES_1.length + IMAGES_2.length + i}
-                  aspectClass={ASPECTS_3[i % ASPECTS_3.length]}
+                  heightClass={HEIGHTS_3[i % HEIGHTS_3.length]}
                   onOpen={setLightbox}
                 />
               ))}
