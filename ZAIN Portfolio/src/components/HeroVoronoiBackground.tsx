@@ -26,17 +26,17 @@ export default function HeroVoronoiBackground() {
         >
           <defs>
             <linearGradient
-              id="gold-stroke"
+              id="accent-stroke"
               x1="0%"
               y1="0%"
               x2="100%"
               y2="100%"
             >
-              <stop offset="0%" stopColor="#C9A84C" stopOpacity="0" />
-              <stop offset="25%" stopColor="#C9A84C" stopOpacity="0.18" />
-              <stop offset="50%" stopColor="#C9A84C" stopOpacity="0" />
-              <stop offset="75%" stopColor="#C9A84C" stopOpacity="0.18" />
-              <stop offset="100%" stopColor="#C9A84C" stopOpacity="0" />
+              <stop offset="0%" stopColor="#A80A19" stopOpacity="0" />
+              <stop offset="25%" stopColor="#A80A19" stopOpacity="0.18" />
+              <stop offset="50%" stopColor="#A80A19" stopOpacity="0" />
+              <stop offset="75%" stopColor="#A80A19" stopOpacity="0.18" />
+              <stop offset="100%" stopColor="#A80A19" stopOpacity="0" />
             </linearGradient>
           </defs>
 

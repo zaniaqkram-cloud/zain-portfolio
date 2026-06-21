@@ -49,7 +49,7 @@ export default function VoronoiCell({ cell }: VoronoiCellProps) {
   const glareBg = useTransform(
     [x, y],
     ([gx, gy]: number[]) =>
-      `radial-gradient(circle at ${(gx + 0.5) * 100}% ${(gy + 0.5) * 100}%, rgba(201,168,76,0.30), rgba(201,168,76,0.05) 50%, transparent 70%)`,
+      `radial-gradient(circle at ${(gx + 0.5) * 100}% ${(gy + 0.5) * 100}%, rgba(168,10,25,0.30), rgba(168,10,25,0.05) 50%, transparent 70%)`,
   );
 
   const fillColor =
@@ -93,7 +93,7 @@ export default function VoronoiCell({ cell }: VoronoiCellProps) {
       <polygon
         points={pointsStr}
         fill={fillColor}
-        stroke="url(#gold-stroke)"
+        stroke="url(#accent-stroke)"
         strokeWidth="1"
       />
 

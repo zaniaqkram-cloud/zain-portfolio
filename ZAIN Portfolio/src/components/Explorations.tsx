@@ -95,7 +95,7 @@ export default function Explorations() {
           </div>
           <h2 className="text-4xl md:text-5xl font-body font-light text-white mb-2">
             Visual{" "}
-            <span className="font-display italic text-[#C9A84C]">Playground</span>
+            <span className="font-display italic text-[#A80A19]">Playground</span>
           </h2>
           <p className="text-sm md:text-base text-neutral-400 max-w-md">
             A collection of experimental visual work, personal projects, and
