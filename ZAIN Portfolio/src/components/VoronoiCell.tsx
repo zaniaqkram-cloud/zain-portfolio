@@ -2,122 +2,177 @@
 
 import { useRef } from "react";
 import {
-  useMotionValue,
-  useSpring,
-  useTransform,
-  motion,
-  type SpringOptions,
+    useMotionValue,
+    useSpring,
+    useTransform,
+    motion,
+    type SpringOptions,
 } from "framer-motion";
 import type { VoronoiCellData } from "./voronoiCells";
 
 interface VoronoiCellProps {
-  cell: VoronoiCellData;
+    cell: VoronoiCellData;
+    rotateDepth?: number;
+    translateDepth?: number;
 }
 
-export default function VoronoiCell({ cell }: VoronoiCellProps) {
-  const ref = useRef<SVGGElement>(null);
+// Original SVG canvas size (from hero-bg.svg viewBox)
+const SVG_WIDTH = 1920;
+const SVG_HEIGHT = 1080;
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+export default function VoronoiCell({
+    cell,
+    rotateDepth = 14,
+    translateDepth = 6,
+}: VoronoiCellProps) {
+    const ref = useRef<HTMLDivElement>(null);
 
-  const springOpts: SpringOptions = { damping: 25, stiffness: 200, mass: 0.5 };
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
 
-  const rotateX = useSpring(
-    useTransform(y, [-0.5, 0.5], [12, -12]),
-    springOpts,
-  );
-  const rotateY = useSpring(
-    useTransform(x, [-0.5, 0.5], [-12, 12]),
-    springOpts,
-  );
-  const scale = useSpring(1, springOpts);
-  const glareOpacity = useSpring(0, springOpts);
+    const springValues: SpringOptions = {
+        damping: 25,
+        stiffness: 220,
+        mass: 0.6,
+    };
 
-  const pointsStr = cell.points.map((p) => `${p[0]},${p[1]}`).join(" ");
+    const rotateX = useSpring(
+        useTransform(y, [-0.5, 0.5], [rotateDepth, -rotateDepth]),
+        springValues
+    );
+    const rotateY = useSpring(
+        useTransform(x, [-0.5, 0.5], [-rotateDepth, rotateDepth]),
+        springValues
+    );
+    const translateX = useSpring(
+        useTransform(x, [-0.5, 0.5], [-translateDepth, translateDepth]),
+        springValues
+    );
+    const translateY = useSpring(
+        useTransform(y, [-0.5, 0.5], [-translateDepth, translateDepth]),
+        springValues
+    );
+    const scale = useSpring(1, springValues);
 
-  const xs = cell.points.map((p) => p[0]);
-  const ys = cell.points.map((p) => p[1]);
-  const minX = Math.min(...xs);
-  const minY = Math.min(...ys);
-  const maxX = Math.max(...xs);
-  const maxY = Math.max(...ys);
-  const bw = maxX - minX;
-  const bh = maxY - minY;
-  const cx = (minX + maxX) / 2;
-  const cy = (minY + maxY) / 2;
+    const glareX = useTransform(x, [-0.5, 0.5], [0, 100]);
+    const glareY = useTransform(y, [-0.5, 0.5], [0, 100]);
+    const glareOpacity = useSpring(0, springValues);
 
-  const glareBg = useTransform(
-    [x, y],
-    ([gx, gy]: number[]) =>
-      `radial-gradient(circle at ${(gx + 0.5) * 100}% ${(gy + 0.5) * 100}%, rgba(201,168,76,0.30), rgba(201,168,76,0.05) 50%, transparent 70%)`,
-  );
+    const glareBackground = useTransform(
+        [glareX, glareY],
+        ([gx, gy]: number[]) =>
+            `radial-gradient(circle at ${gx}% ${gy}%, rgba(207, 2, 2, 0.45), transparent 65%)`
+    );
 
-  const fillColor =
-    cell.id % 2 === 0 ? "rgba(10,10,10,0.25)" : "rgba(115,6,14,0.12)";
+    function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+        if (!ref.current) return;
+        const rect = ref.current.getBoundingClientRect();
+        const offsetX = (e.clientX - rect.left) / rect.width - 0.5;
+        const offsetY = (e.clientY - rect.top) / rect.height - 0.5;
+        x.set(offsetX);
+        y.set(offsetY);
+    }
 
-  function handleMouseMove(e: React.MouseEvent<SVGGElement>) {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const ox = (e.clientX - rect.left) / rect.width - 0.5;
-    const oy = (e.clientY - rect.top) / rect.height - 0.5;
-    x.set(ox);
-    y.set(oy);
-  }
+    function handleMouseEnter() {
+        scale.set(1.04);
+        glareOpacity.set(1);
+    }
 
-  function handleMouseEnter() {
-    scale.set(1.04);
-    glareOpacity.set(1);
-  }
+    function handleMouseLeave() {
+        x.set(0);
+        y.set(0);
+        scale.set(1);
+        glareOpacity.set(0);
+    }
 
-  function handleMouseLeave() {
-    x.set(0);
-    y.set(0);
-    scale.set(1);
-    glareOpacity.set(0);
-  }
+    // Position this cell exactly where it sits in the original 1920x1080 canvas,
+    // using percentages so it scales responsively with the hero section.
+    const leftPct = (cell.x / SVG_WIDTH) * 100;
+    const topPct = (cell.y / SVG_HEIGHT) * 100;
+    const widthPct = (cell.width / SVG_WIDTH) * 100;
+    const heightPct = (cell.height / SVG_HEIGHT) * 100;
 
-  return (
-    <motion.g
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transformOrigin: `${cx} ${cy}`,
-        rotateX,
-        rotateY,
-        scale,
-        transformStyle: "preserve-3d",
-      }}
-    >
-      <polygon
-        points={pointsStr}
-        fill={fillColor}
-        stroke="url(#gold-stroke)"
-        strokeWidth="1"
-      />
+    return (
+        <div
+            ref={ref}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            className="absolute"
+            style={{
+                left: `${leftPct}%`,
+                top: `${topPct}%`,
+                width: `${widthPct}%`,
+                height: `${heightPct}%`,
+                perspective: "800px",
+            }}
+        >
+            <motion.div
+                style={{
+                    rotateX,
+                    rotateY,
+                    translateX,
+                    translateY,
+                    scale,
+                    transformStyle: "preserve-3d",
+                    width: "100%",
+                    height: "100%",
+                }}
+                className="relative"
+            >
+                <svg
+                    viewBox={`0 0 ${cell.width} ${cell.height}`}
+                    width="100%"
+                    height="100%"
+                    style={{ overflow: "visible" }}
+                >
+                    <defs>
+                        <linearGradient
+                            id={`cell-stroke-${cell.id}`}
+                            x1="0%"
+                            y1="0%"
+                            x2="0%"
+                            y2="100%"
+                        >
+                            <stop offset="0%" stopColor="white" stopOpacity="0" />
+                            <stop offset="28%" stopColor="white" stopOpacity="0.9" />
+                            <stop offset="65%" stopColor="white" stopOpacity="0" />
+                            <stop offset="100%" stopColor="white" stopOpacity="0.9" />
+                        </linearGradient>
+                        <clipPath id={`cell-clip-${cell.id}`}>
+                            <path d={cell.d} transform={`translate(${-cell.x}, ${-cell.y})`} />
+                        </clipPath>
+                    </defs>
 
-      <clipPath id={`cell-clip-${cell.id}`}>
-        <polygon points={pointsStr} />
-      </clipPath>
+                    {/* Glass fill */}
+                    <path
+                        d={cell.d}
+                        transform={`translate(${-cell.x}, ${-cell.y})`}
+                        fill="black"
+                        fillOpacity="0.12"
+                        stroke={`url(#cell-stroke-${cell.id})`}
+                        strokeWidth="1"
+                    />
 
-      <foreignObject
-        x={minX}
-        y={minY}
-        width={bw}
-        height={bh}
-        clipPath={`url(#cell-clip-${cell.id})`}
-      >
-        <motion.div
-          className="pointer-events-none"
-          style={{
-            width: "100%",
-            height: "100%",
-            background: glareBg,
-            opacity: glareOpacity,
-          }}
-        />
-      </foreignObject>
-    </motion.g>
-  );
+                    {/* Glare layer, clipped to the cell shape */}
+                    <foreignObject
+                        x="0"
+                        y="0"
+                        width={cell.width}
+                        height={cell.height}
+                        clipPath={`url(#cell-clip-${cell.id})`}
+                    >
+                        <motion.div
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                background: glareBackground,
+                                opacity: glareOpacity,
+                            }}
+                        />
+                    </foreignObject>
+                </svg>
+            </motion.div>
+        </div>
+    );
 }
