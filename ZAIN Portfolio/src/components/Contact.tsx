@@ -122,7 +122,7 @@ export default function Contact() {
               </p>
               <a
                 href="mailto:zaniaqkram@gmail.com"
-                className="group relative inline-flex items-center gap-2 rounded-full text-sm px-8 py-4 text-text-primary transition-all duration-300 hover:scale-105 overflow-hidden border border-stroke mb-8"
+                className="group relative inline-flex items-center gap-2 rounded-full text-sm px-6 sm:px-8 py-4 text-text-primary transition-all duration-300 hover:scale-105 overflow-hidden border border-stroke mb-8"
               >
                 <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <span className="relative flex items-center gap-2 bg-bg rounded-full px-6 py-2">
@@ -227,7 +227,7 @@ export default function Contact() {
 
         <div className="border-t border-stroke pt-6 px-6 md:px-10 lg:px-16 max-w-[1200px] mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-6">
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
               {socialLinks.map((link) => (
                 <a
                   key={link.name}

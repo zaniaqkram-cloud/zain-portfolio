@@ -9,6 +9,7 @@ import {
     type SpringOptions,
 } from "framer-motion";
 import type { VoronoiCellData } from "./voronoiCells";
+import { useHasHover } from "../lib/useHasHover";
 
 interface VoronoiCellProps {
     cell: VoronoiCellData;
@@ -26,6 +27,7 @@ export default function VoronoiCell({
     translateDepth = 6,
 }: VoronoiCellProps) {
     const ref = useRef<HTMLDivElement>(null);
+    const hasHover = useHasHover();
 
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -65,7 +67,7 @@ export default function VoronoiCell({
     );
 
     function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-        if (!ref.current) return;
+        if (!hasHover || !ref.current) return;
         const rect = ref.current.getBoundingClientRect();
         const offsetX = (e.clientX - rect.left) / rect.width - 0.5;
         const offsetY = (e.clientY - rect.top) / rect.height - 0.5;
@@ -74,11 +76,13 @@ export default function VoronoiCell({
     }
 
     function handleMouseEnter() {
+        if (!hasHover) return;
         scale.set(1.04);
         glareOpacity.set(1);
     }
 
     function handleMouseLeave() {
+        if (!hasHover) return;
         x.set(0);
         y.set(0);
         scale.set(1);
@@ -95,9 +99,11 @@ export default function VoronoiCell({
     return (
         <div
             ref={ref}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            {...(hasHover ? {
+                onMouseMove: handleMouseMove,
+                onMouseEnter: handleMouseEnter,
+                onMouseLeave: handleMouseLeave,
+            } : {})}
             className="absolute"
             style={{
                 left: `${leftPct}%`,

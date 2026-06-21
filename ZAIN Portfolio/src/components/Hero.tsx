@@ -63,7 +63,7 @@ export default function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative h-screen w-full overflow-hidden"
+      className="relative h-screen min-h-[100dvh] w-full overflow-hidden"
     >
       <HeroVoronoiBackground />
 
@@ -74,7 +74,7 @@ export default function Hero() {
           COLLECTION '26
         </span>
 
-        <h1 className="name-reveal text-6xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight text-text-primary mb-6">
+        <h1 className="name-reveal text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight text-text-primary mb-6">
           Zain Akram
         </h1>
 
@@ -95,7 +95,7 @@ export default function Hero() {
         </p>
 
         {/* CTA Buttons */}
-        <div className="blur-in inline-flex gap-4 pointer-events-auto">
+        <div className="blur-in flex flex-col sm:flex-row gap-3 sm:gap-4 pointer-events-auto">
           <a
             href="#works"
             style={{ pointerEvents: "auto" }}

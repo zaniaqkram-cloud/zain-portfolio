@@ -9,6 +9,7 @@ import {
     motion,
     type SpringOptions,
 } from "framer-motion";
+import { useHasHover } from "../../lib/useHasHover";
 
 export const CometCard = ({
     rotateDepth = 17.5,
@@ -22,6 +23,7 @@ export const CometCard = ({
     children: React.ReactNode;
 }) => {
     const ref = useRef<HTMLDivElement>(null);
+    const hasHover = useHasHover();
 
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -60,7 +62,7 @@ export const CometCard = ({
     );
 
     function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-        if (!ref.current) return;
+        if (!hasHover || !ref.current) return;
 
         const rect = ref.current.getBoundingClientRect();
         const offsetX = (e.clientX - rect.left) / rect.width - 0.5;
@@ -71,8 +73,13 @@ export const CometCard = ({
     }
 
     function handleMouseLeave() {
+        if (!hasHover) return;
         x.set(0);
         y.set(0);
+    }
+
+    if (!hasHover) {
+        return <div className={className}>{children}</div>;
     }
 
     return (
