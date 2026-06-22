@@ -503,7 +503,7 @@ export function CircularGallery({
   borderRadius = 0.05,
   scrollSpeed = 2,
   scrollEase = 0.05,
-  autoScrollSpeed = 0.4,
+  autoScrollSpeed = 0.1,
   className = "",
 }: CircularGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
