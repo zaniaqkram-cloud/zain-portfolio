@@ -17,9 +17,15 @@ interface VoronoiCellProps {
     translateDepth?: number;
 }
 
-// Original SVG canvas size (from hero-bg.svg viewBox)
 const SVG_WIDTH = 1920;
 const SVG_HEIGHT = 1080;
+const GAP_SCALE = 0.965;
+
+function gapTransform(cell: VoronoiCellData): string {
+    const cx = cell.width / 2;
+    const cy = cell.height / 2;
+    return `translate(${-cell.x}, ${-cell.y}) translate(${cx}, ${cy}) scale(${GAP_SCALE}) translate(${-cx}, ${-cy})`;
+}
 
 export default function VoronoiCell({
     cell,
@@ -66,6 +72,8 @@ export default function VoronoiCell({
             `radial-gradient(circle at ${gx}% ${gy}%, rgba(207, 2, 2, 0.45), transparent 65%)`
     );
 
+    const strokeOpacity = useSpring(0, springValues);
+
     function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
         if (!hasHover || !ref.current) return;
         const rect = ref.current.getBoundingClientRect();
@@ -77,8 +85,9 @@ export default function VoronoiCell({
 
     function handleMouseEnter() {
         if (!hasHover) return;
-        scale.set(1.04);
+        scale.set(1.03);
         glareOpacity.set(1);
+        strokeOpacity.set(1);
     }
 
     function handleMouseLeave() {
@@ -87,14 +96,15 @@ export default function VoronoiCell({
         y.set(0);
         scale.set(1);
         glareOpacity.set(0);
+        strokeOpacity.set(0);
     }
 
-    // Position this cell exactly where it sits in the original 1920x1080 canvas,
-    // using percentages so it scales responsively with the hero section.
     const leftPct = (cell.x / SVG_WIDTH) * 100;
     const topPct = (cell.y / SVG_HEIGHT) * 100;
     const widthPct = (cell.width / SVG_WIDTH) * 100;
     const heightPct = (cell.height / SVG_HEIGHT) * 100;
+
+    const t = gapTransform(cell);
 
     return (
         <div
@@ -133,34 +143,76 @@ export default function VoronoiCell({
                     style={{ overflow: "visible" }}
                 >
                     <defs>
+                        <clipPath id={`cell-clip-${cell.id}`}>
+                            <path d={cell.d} transform={t} />
+                        </clipPath>
+                        <filter
+                            id={`cell-shadow-${cell.id}`}
+                            x="-30%"
+                            y="-30%"
+                            width="160%"
+                            height="160%"
+                        >
+                            <feDropShadow
+                                dx="0"
+                                dy="6"
+                                stdDeviation="8"
+                                floodColor="rgba(0,0,0,0.6)"
+                            />
+                        </filter>
                         <linearGradient
                             id={`cell-stroke-${cell.id}`}
                             x1="0%"
                             y1="0%"
-                            x2="0%"
+                            x2="100%"
                             y2="100%"
                         >
-                            <stop offset="0%" stopColor="white" stopOpacity="0" />
-                            <stop offset="28%" stopColor="white" stopOpacity="0.9" />
-                            <stop offset="65%" stopColor="white" stopOpacity="0" />
-                            <stop offset="100%" stopColor="white" stopOpacity="0.9" />
+                            <stop offset="0%" stopColor="white" stopOpacity="0.04" />
+                            <stop offset="30%" stopColor="white" stopOpacity="0.12" />
+                            <stop offset="70%" stopColor="white" stopOpacity="0.04" />
+                            <stop offset="100%" stopColor="white" stopOpacity="0.10" />
                         </linearGradient>
-                        <clipPath id={`cell-clip-${cell.id}`}>
-                            <path d={cell.d} transform={`translate(${-cell.x}, ${-cell.y})`} />
-                        </clipPath>
                     </defs>
 
-                    {/* Glass fill */}
+                    {/* Backdrop blur layer — clips to scaled cell shape */}
+                    <foreignObject
+                        x="0"
+                        y="0"
+                        width={cell.width}
+                        height={cell.height}
+                        clipPath={`url(#cell-clip-${cell.id})`}
+                    >
+                        <div
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                backdropFilter: "blur(16px)",
+                                WebkitBackdropFilter: "blur(16px)",
+                            }}
+                        />
+                    </foreignObject>
+
+                    {/* Glass fill with drop-shadow and edge stroke */}
                     <path
                         d={cell.d}
-                        transform={`translate(${-cell.x}, ${-cell.y})`}
-                        fill="black"
-                        fillOpacity="0.12"
+                        transform={t}
+                        fill="rgba(10, 0, 1, 0.2)"
                         stroke={`url(#cell-stroke-${cell.id})`}
                         strokeWidth="1"
+                        filter={`url(#cell-shadow-${cell.id})`}
                     />
 
-                    {/* Glare layer, clipped to the cell shape */}
+                    {/* Hover highlight border overlay */}
+                    <motion.path
+                        d={cell.d}
+                        transform={t}
+                        fill="none"
+                        stroke="rgba(255, 255, 255, 0.2)"
+                        strokeWidth="1.5"
+                        style={{ opacity: strokeOpacity }}
+                    />
+
+                    {/* Interactive glare layer */}
                     <foreignObject
                         x="0"
                         y="0"

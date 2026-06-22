@@ -13,6 +13,24 @@ export default function HeroVoronoiBackground() {
                 }}
             />
 
+            {/* Subtle noise texture — invisible alone, but gives the glass cells something to blur */}
+            <svg
+                className="absolute inset-0 w-full h-full pointer-events-none"
+                style={{ opacity: 0.025, mixBlendMode: "overlay" }}
+                aria-hidden="true"
+            >
+                <filter id="bg-noise">
+                    <feTurbulence
+                        type="fractalNoise"
+                        baseFrequency="0.65"
+                        numOctaves="3"
+                        stitchTiles="stitch"
+                    />
+                    <feColorMatrix type="saturate" values="0" />
+                </filter>
+                <rect width="100%" height="100%" filter="url(#bg-noise)" />
+            </svg>
+
             {/* Container that mimics the 1920x1080 SVG canvas, scaled responsively */}
             <div className="absolute inset-0">
                 {voronoiCells.map((cell) => (
