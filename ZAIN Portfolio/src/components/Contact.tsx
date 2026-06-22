@@ -239,9 +239,13 @@ export default function Contact() {
                   {link.name}
                 </a>
               ))}
-
             </div>
+            <span className="text-xs text-muted">
+              Available for projects
+            </span>
           </div>
-        </section>
-        );
+        </div>
+      </div>
+    </section>
+  );
 }
