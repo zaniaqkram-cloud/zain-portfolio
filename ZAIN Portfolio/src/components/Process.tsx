@@ -27,10 +27,11 @@ const steps = [
   },
 ];
 
+// Updated with authentic credentials matching your engineering & visual design background
 const stats = [
-  { value: "20+", label: "Years Experience" },
-  { value: "95+", label: "Projects Done" },
-  { value: "200%", label: "Satisfied Clients" },
+  { value: "4", label: "UI/UX Case Studies" },
+  { value: "22+", label: "Visual Explorations" },
+  { value: "3+", label: "Certifications Earned" },
 ];
 
 export default function Process() {
@@ -76,7 +77,8 @@ export default function Process() {
               <h3 className="text-lg font-body font-medium text-text-primary mb-2">
                 {step.title}
               </h3>
-              <p className="text-sm text-muted leading-relaxed">
+              {/* Changed text-muted to text-neutral-300 font-normal for higher readability and standard weight */}
+              <p className="text-sm text-neutral-300 font-normal leading-relaxed">
                 {step.description}
               </p>
               {i < steps.length - 1 && (
