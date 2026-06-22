@@ -1,83 +1,34 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  ContainerScroll,
-  ContainerSticky,
-  GalleryContainer,
-  GalleryCol,
-} from "./ui/animated-gallery";
+import { CircularGallery } from "./ui/circular-gallery-2";
 
-// ── Column image lists ────────────────────────────────────────────────────────
-const IMAGES_1 = [
-  "/play1.jpg",
-  "/play2.jpg",
-  "/play3.jpg",
-  "/play4.jpg",
-  "/play5.jpg",
-  "/play6.jpg",
+const playgroundItems = [
+  { image: "/play1.jpg", text: "Exploration 01" },
+  { image: "/play2.jpg", text: "Exploration 02" },
+  { image: "/play3.jpg", text: "Exploration 03" },
+  { image: "/play4.jpg", text: "Exploration 04" },
+  { image: "/play5.jpg", text: "Exploration 05" },
+  { image: "/play6.jpg", text: "Exploration 06" },
+  { image: "/play7.jpg", text: "Exploration 07" },
+  { image: "/play8.jpg", text: "Exploration 08" },
+  { image: "/play9.jpg", text: "Exploration 09" },
+  { image: "/play10.jpg", text: "Exploration 10" },
+  { image: "/play11.jpg", text: "Exploration 11" },
+  { image: "/play12.jpg", text: "Exploration 12" },
+  { image: "/play13.jpg", text: "Exploration 13" },
+  { image: "/play14.jpg", text: "Exploration 14" },
+  { image: "/play15.jpg", text: "Exploration 15" },
+  { image: "/play16.jpg", text: "Exploration 16" },
+  { image: "/play17.jpg", text: "Exploration 17" },
+  { image: "/play18.jpg", text: "Exploration 18" },
+  { image: "/play19.jpg", text: "Exploration 19" },
+  { image: "/play20.jpg", text: "Exploration 20" },
+  { image: "/play21.jpg", text: "Exploration 21" },
+  { image: "/play22.jpg", text: "Exploration 22" },
 ];
 
-const IMAGES_2 = [
-  "/play7.jpg",
-  "/play8.jpg",
-  "/play9.jpg",
-  "/play10.jpg",
-  "/play11.jpg",
-  "/play12.jpg",
-];
+const ALL_IMAGES = playgroundItems.map((item) => item.image);
 
-const IMAGES_3 = [
-  "/play13.jpg",
-  "/play14.jpg",
-  "/play15.jpg",
-  "/play16.jpg",
-  "/play17.jpg",
-  "/play18.jpg",
-];
-
-// Flattened list used only by the lightbox so it can reference any image by
-// its global index (col-1 images first, then col-2, then col-3).
-const ALL_IMAGES = [...IMAGES_1, ...IMAGES_2, ...IMAGES_3];
-
-// Fixed card heights — consistent sizing across all 18 cards prevents
-// columns from becoming arbitrarily tall and keeps the grid compact.
-const HEIGHTS_1 = ["h-[280px]", "h-[320px]", "h-[260px]", "h-[300px]", "h-[280px]", "h-[320px]"];
-const HEIGHTS_2 = ["h-[300px]", "h-[260px]", "h-[320px]", "h-[280px]", "h-[260px]", "h-[300px]"];
-const HEIGHTS_3 = ["h-[260px]", "h-[300px]", "h-[280px]", "h-[320px]", "h-[300px]", "h-[260px]"];
-
-// ── Helper ────────────────────────────────────────────────────────────────────
-function GalleryCard({
-  src,
-  globalIndex,
-  heightClass,
-  onOpen,
-}: {
-  src: string;
-  globalIndex: number;
-  heightClass: string;
-  onOpen: (idx: number) => void;
-}) {
-  return (
-    <div
-      onClick={() => onOpen(globalIndex)}
-      className={`cursor-pointer group relative overflow-hidden rounded-2xl border border-neutral-900 w-full ${heightClass}`}
-    >
-      {/* Skeleton shown while image loads */}
-      <div className="absolute inset-0 bg-neutral-900/50 animate-pulse" />
-      <img
-        src={src}
-        alt={`Play ${globalIndex + 1}`}
-        loading="lazy"
-        className="relative w-full h-full object-cover brightness-[0.85] group-hover:brightness-100 transition-all duration-500 group-hover:scale-105"
-      />
-      <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <span className="text-sm font-body text-white/90">Play {globalIndex + 1}</span>
-      </div>
-    </div>
-  );
-}
-
-// ── Component ─────────────────────────────────────────────────────────────────
 export default function Explorations() {
   const [lightbox, setLightbox] = useState<number | null>(null);
 
@@ -104,58 +55,16 @@ export default function Explorations() {
         </div>
       </div>
 
-      {/* ── Scroll Runway ────────────────────────────────────────────────────── */}
-      <ContainerScroll className="bg-black">
-
-        {/* ── Sticky Viewport Lock ─────────────────────────────────────────── */}
-        <ContainerSticky>
-
-          {/* ── Gallery grid centered inside the sticky lock ────────────────── */}
-          <GalleryContainer className="gap-4 p-4 w-full h-full">
-
-            {/* TRACK 1 — drifts upward moderately */}
-            <GalleryCol yRange={["0%", "-15%"]}>
-              {IMAGES_1.map((src, i) => (
-                <GalleryCard
-                  key={src}
-                  src={src}
-                  globalIndex={i}
-                  heightClass={HEIGHTS_1[i % HEIGHTS_1.length]}
-                  onOpen={setLightbox}
-                />
-              ))}
-            </GalleryCol>
-
-            {/* TRACK 2 — drifts downward slowly */}
-            <GalleryCol yRange={["0%", "10%"]}>
-              {IMAGES_2.map((src, i) => (
-                <GalleryCard
-                  key={src}
-                  src={src}
-                  globalIndex={IMAGES_1.length + i}
-                  heightClass={HEIGHTS_2[i % HEIGHTS_2.length]}
-                  onOpen={setLightbox}
-                />
-              ))}
-            </GalleryCol>
-
-            {/* TRACK 3 — drifts upward rapidly */}
-            <GalleryCol yRange={["0%", "-25%"]}>
-              {IMAGES_3.map((src, i) => (
-                <GalleryCard
-                  key={src}
-                  src={src}
-                  globalIndex={IMAGES_1.length + IMAGES_2.length + i}
-                  heightClass={HEIGHTS_3[i % HEIGHTS_3.length]}
-                  onOpen={setLightbox}
-                />
-              ))}
-            </GalleryCol>
-
-          </GalleryContainer>
-
-        </ContainerSticky>
-      </ContainerScroll>
+      {/* ── WebGL Circular Gallery ──────────────────────────────────────────── */}
+      <div className="relative h-[650px] w-full overflow-hidden bg-transparent">
+        <CircularGallery
+          items={playgroundItems}
+          bend={2.8}
+          borderRadius={0.04}
+          scrollEase={0.03}
+          className="text-[#9B111E] dark:text-[#E63946] font-extrabold tracking-wider"
+        />
+      </div>
 
       {/* ── Lightbox ─────────────────────────────────────────────────────────── */}
       <AnimatePresence>
