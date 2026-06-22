@@ -99,7 +99,7 @@ export default function Hero() {
         {/* CTA Buttons */}
         <div className="blur-in flex flex-col sm:flex-row gap-3 sm:gap-4 pointer-events-auto">
           <a
-            href="#works"
+            href="#explorations"
             style={{ pointerEvents: "auto" }}
             className="group relative rounded-full text-sm px-7 py-3.5 bg-text-primary text-bg hover:bg-bg hover:text-text-primary transition-all duration-300 hover:scale-105 overflow-hidden"
           >

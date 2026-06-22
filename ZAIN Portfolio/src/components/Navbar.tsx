@@ -20,7 +20,7 @@ export default function Navbar() {
       Home: "hero",
       About: "about",
       Services: "services",
-      Work: "works",
+      Work: "explorations",
       Process: "process",
       Contact: "contact",
     };
