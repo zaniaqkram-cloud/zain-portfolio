@@ -137,6 +137,7 @@ export default function VoronoiCell({
                     transformOrigin: "center",
                     width: "100%",
                     height: "100%",
+                    overflow: "visible",
                 }}
                 className="relative"
             >
@@ -144,7 +145,8 @@ export default function VoronoiCell({
                     viewBox={`0 0 ${cell.width} ${cell.height}`}
                     width="100%"
                     height="100%"
-                    style={{ overflow: "visible" }}
+                    className="overflow-visible"
+                    style={{ position: "absolute", top: 0, left: 0, overflow: "visible" }}
                 >
                     <defs>
                         <clipPath id={`cell-clip-${cell.id}`}>
