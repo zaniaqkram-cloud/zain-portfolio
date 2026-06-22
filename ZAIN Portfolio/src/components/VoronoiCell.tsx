@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import {
     useMotionValue,
     useSpring,
@@ -37,6 +37,7 @@ export default function VoronoiCell({
 
     const x = useMotionValue(0);
     const y = useMotionValue(0);
+    const isHovered = useRef(false);
 
     const springValues: SpringOptions = {
         damping: 25,
@@ -74,32 +75,47 @@ export default function VoronoiCell({
 
     const strokeOpacity = useSpring(0, springValues);
 
-    function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-        if (!hasHover || !ref.current) return;
-        const rect = ref.current.getBoundingClientRect();
-        const offsetX = (e.clientX - rect.left) / rect.width - 0.5;
-        const offsetY = (e.clientY - rect.top) / rect.height - 0.5;
-        x.set(offsetX);
-        y.set(offsetY);
-    }
-
-    function handleMouseEnter() {
+    // Single window mousemove listener — works through pointer-events-none
+    useEffect(() => {
         if (!hasHover) return;
-        scale.set(1.03);
-        glareOpacity.set(1);
-        strokeOpacity.set(1);
-        if (ref.current) ref.current.style.zIndex = "50";
-    }
 
-    function handleMouseLeave() {
-        if (!hasHover) return;
-        x.set(0);
-        y.set(0);
-        scale.set(1);
-        glareOpacity.set(0);
-        strokeOpacity.set(0);
-        if (ref.current) ref.current.style.zIndex = "";
-    }
+        function onMouseMove(e: MouseEvent) {
+            const el = ref.current;
+            if (!el) return;
+
+            const rect = el.getBoundingClientRect();
+            const inside =
+                e.clientX >= rect.left &&
+                e.clientX <= rect.right &&
+                e.clientY >= rect.top &&
+                e.clientY <= rect.bottom;
+
+            if (inside) {
+                if (!isHovered.current) {
+                    isHovered.current = true;
+                    scale.set(1.03);
+                    glareOpacity.set(1);
+                    strokeOpacity.set(1);
+                    el.style.zIndex = "50";
+                }
+                const offsetX = (e.clientX - rect.left) / rect.width - 0.5;
+                const offsetY = (e.clientY - rect.top) / rect.height - 0.5;
+                x.set(offsetX);
+                y.set(offsetY);
+            } else if (isHovered.current) {
+                isHovered.current = false;
+                x.set(0);
+                y.set(0);
+                scale.set(1);
+                glareOpacity.set(0);
+                strokeOpacity.set(0);
+                el.style.zIndex = "";
+            }
+        }
+
+        window.addEventListener("mousemove", onMouseMove, { passive: true });
+        return () => window.removeEventListener("mousemove", onMouseMove);
+    }, [hasHover, scale, glareOpacity, strokeOpacity, x, y]);
 
     const leftPct = (cell.x / SVG_WIDTH) * 100;
     const topPct = (cell.y / SVG_HEIGHT) * 100;
@@ -111,11 +127,6 @@ export default function VoronoiCell({
     return (
         <div
             ref={ref}
-            {...(hasHover ? {
-                onMouseMove: handleMouseMove,
-                onMouseEnter: handleMouseEnter,
-                onMouseLeave: handleMouseLeave,
-            } : {})}
             className="absolute overflow-visible"
             style={{
                 left: `${leftPct}%`,
