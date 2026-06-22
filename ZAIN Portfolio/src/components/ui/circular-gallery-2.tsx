@@ -3,14 +3,6 @@ import { useEffect, useRef } from "react";
 
 type GL = Renderer["gl"];
 
-function debounce<T extends (...args: unknown[]) => void>(func: T, wait: number) {
-  let timeout: ReturnType<typeof setTimeout>;
-  return function (this: unknown, ...args: Parameters<T>) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
-  };
-}
-
 function lerp(p1: number, p2: number, t: number): number {
   return p1 + (p2 - p1) * t;
 }
@@ -235,6 +227,7 @@ interface AppConfig {
   borderRadius?: number;
   scrollSpeed?: number;
   scrollEase?: number;
+  autoScrollSpeed?: number;
 }
 
 export interface GalleryItem {
@@ -245,6 +238,7 @@ export interface GalleryItem {
 class AppCore {
   container: HTMLElement;
   scrollSpeed: number;
+  autoScrollSpeed: number;
   scroll: {
     ease: number;
     current: number;
@@ -252,7 +246,6 @@ class AppCore {
     last: number;
     position?: number;
   };
-  onCheckDebounce: (...args: unknown[]) => void;
   renderer!: Renderer;
   gl!: GL;
   camera!: Camera;
@@ -283,12 +276,13 @@ class AppCore {
       borderRadius = 0,
       scrollSpeed = 2,
       scrollEase = 0.05,
+      autoScrollSpeed = 0.4,
     }: AppConfig,
   ) {
     this.container = container;
     this.scrollSpeed = scrollSpeed;
+    this.autoScrollSpeed = autoScrollSpeed;
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
-    this.onCheckDebounce = debounce(this.onCheck.bind(this), 200);
     this.createRenderer();
     this.createCamera();
     this.createScene();
@@ -374,14 +368,12 @@ class AppCore {
 
   onTouchUp() {
     this.isDown = false;
-    this.onCheck();
   }
 
   onWheel(e: Event) {
     const wheelEvent = e as WheelEvent;
     const delta = wheelEvent.deltaY;
     this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
-    this.onCheckDebounce();
   }
 
   onPointerMove(e: MouseEvent) {
@@ -393,14 +385,6 @@ class AppCore {
   onPointerLeave() {
     this.mouseX = -Infinity;
     this.mouseY = -Infinity;
-  }
-
-  onCheck() {
-    if (!this.medias || !this.medias[0]) return;
-    const width = this.medias[0].width;
-    const itemIndex = Math.round(Math.abs(this.scroll.target) / width);
-    const item = width * itemIndex;
-    this.scroll.target = this.scroll.target < 0 ? -item : item;
   }
 
   onResize() {
@@ -424,6 +408,9 @@ class AppCore {
   }
 
   update() {
+    if (!this.isDown) {
+      this.scroll.target += this.autoScrollSpeed;
+    }
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     const direction: "right" | "left" =
       this.scroll.current > this.scroll.last ? "right" : "left";
@@ -506,6 +493,7 @@ export interface CircularGalleryProps {
   borderRadius?: number;
   scrollSpeed?: number;
   scrollEase?: number;
+  autoScrollSpeed?: number;
   className?: string;
 }
 
@@ -515,6 +503,7 @@ export function CircularGallery({
   borderRadius = 0.05,
   scrollSpeed = 2,
   scrollEase = 0.05,
+  autoScrollSpeed = 0.4,
   className = "",
 }: CircularGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -529,12 +518,13 @@ export function CircularGallery({
       borderRadius,
       scrollSpeed,
       scrollEase,
+      autoScrollSpeed,
     });
 
     return () => {
       app.destroy();
     };
-  }, [items, bend, borderRadius, scrollSpeed, scrollEase]);
+  }, [items, bend, borderRadius, scrollSpeed, scrollEase, autoScrollSpeed]);
 
   return (
     <div
