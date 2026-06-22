@@ -88,6 +88,7 @@ export default function VoronoiCell({
         scale.set(1.03);
         glareOpacity.set(1);
         strokeOpacity.set(1);
+        if (ref.current) ref.current.style.zIndex = "50";
     }
 
     function handleMouseLeave() {
@@ -97,6 +98,7 @@ export default function VoronoiCell({
         scale.set(1);
         glareOpacity.set(0);
         strokeOpacity.set(0);
+        if (ref.current) ref.current.style.zIndex = "";
     }
 
     const leftPct = (cell.x / SVG_WIDTH) * 100;
@@ -114,13 +116,14 @@ export default function VoronoiCell({
                 onMouseEnter: handleMouseEnter,
                 onMouseLeave: handleMouseLeave,
             } : {})}
-            className="absolute"
+            className="absolute overflow-visible"
             style={{
                 left: `${leftPct}%`,
                 top: `${topPct}%`,
                 width: `${widthPct}%`,
                 height: `${heightPct}%`,
                 perspective: "800px",
+                isolation: "isolate",
             }}
         >
             <motion.div
@@ -131,6 +134,7 @@ export default function VoronoiCell({
                     translateY,
                     scale,
                     transformStyle: "preserve-3d",
+                    transformOrigin: "center",
                     width: "100%",
                     height: "100%",
                 }}
