@@ -3,7 +3,7 @@ import VoronoiCell from "./VoronoiCell";
 
 export default function HeroVoronoiBackground() {
     return (
-        <div className="absolute inset-0 bg-[#73060E]">
+        <div className="bg-[#73060E] w-full h-full">
             {/* Base radial gradient matching the original SVG background */}
             <div
                 className="absolute inset-0"

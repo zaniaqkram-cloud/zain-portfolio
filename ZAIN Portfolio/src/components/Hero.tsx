@@ -63,12 +63,14 @@ export default function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative h-screen min-h-[100dvh] w-full overflow-hidden"
+      className="relative bg-black z-0 h-screen min-h-[100dvh] w-full overflow-hidden"
     >
-      <HeroVoronoiBackground />
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        <HeroVoronoiBackground />
+      </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 pointer-events-none">
+      <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-6">
 
         <span className="blur-in text-xs text-white/60 uppercase tracking-[0.3em] mb-8">
           COLLECTION '26
@@ -117,7 +119,7 @@ export default function Hero() {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
         <span className="text-xs text-muted uppercase tracking-[0.2em]">
           SCROLL
         </span>
