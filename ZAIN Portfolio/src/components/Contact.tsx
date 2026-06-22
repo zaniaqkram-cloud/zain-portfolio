@@ -240,12 +240,7 @@ export default function Contact() {
                 </a>
               ))}
             </div>
-            <span className="text-xs text-muted">
-              Available for projects
-            </span>
           </div>
-        </div>
-      </div>
-    </section>
-  );
+        </section>
+        );
 }
