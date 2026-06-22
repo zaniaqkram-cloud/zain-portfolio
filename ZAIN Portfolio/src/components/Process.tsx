@@ -71,7 +71,7 @@ export default function Process() {
               viewport={{ once: true, margin: "-50px" }}
               className="relative"
             >
-              <span className="block text-4xl md:text-5xl font-display italic accent-gradient-text mb-4">
+              <span className="block text-4xl md:text-5xl font-display font-medium italic accent-gradient-text mb-4">
                 {step.number}
               </span>
               <h3 className="text-lg font-body font-medium text-text-primary mb-2">
