@@ -29,9 +29,9 @@ const steps = [
 
 // Updated with authentic credentials matching your engineering & visual design background
 const stats = [
-  { value: "4", label: "UI/UX Case Studies" },
-  { value: "22+", label: "Visual Explorations" },
-  { value: "3+", label: "Certifications Earned" },
+  { value: "6+", label: "TOOLS MASTERED" },
+  { value: "24h", label: "RESPONSE TIME" },
+  { value: "100%", label: "CLIENT SATISFACTION" },
 ];
 
 export default function Process() {
