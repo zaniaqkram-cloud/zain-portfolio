@@ -120,15 +120,20 @@ export default function Contact() {
               <p className="text-sm md:text-base text-muted max-w-md mb-8">
                 Have a project in mind? Let's create something extraordinary.
               </p>
-              <a
-                href="mailto:zaniaqkram@gmail.com"
-                className="group relative inline-flex items-center gap-2 rounded-full text-sm px-6 sm:px-8 py-4 text-text-primary transition-all duration-300 hover:scale-105 overflow-hidden border border-stroke mb-8"
-              >
-                <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative flex items-center gap-2 bg-bg rounded-full px-6 py-2">
-                  zaniaqkram@gmail.com ↗
-                </span>
-              </a>
+
+              <div className="mb-8">
+                <a
+                  href="mailto:zaniaqkram@gmail.com"
+                  className="group relative inline-flex items-center gap-2 rounded-full text-sm px-6 sm:px-8 py-4 text-text-primary transition-all duration-300 hover:scale-105 overflow-hidden border border-stroke"
+                >
+                  <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative flex items-center gap-2 bg-bg rounded-full px-6 py-2">
+                    zaniaqkram@gmail.com ↗
+                  </span>
+                </a>
+              </div>
+
+              {/* Green dot badge kept strictly here under the email call-to-action */}
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
@@ -225,6 +230,7 @@ export default function Contact() {
           </div>
         </div>
 
+        {/* Bottom Footer Section: Contains only your clean social links list */}
         <div className="border-t border-stroke pt-6 px-6 md:px-10 lg:px-16 max-w-[1200px] mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
@@ -241,6 +247,8 @@ export default function Contact() {
               ))}
             </div>
           </div>
-        </section>
-        );
+        </div>
+      </div>
+    </section>
+  );
 }
