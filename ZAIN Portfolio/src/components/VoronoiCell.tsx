@@ -17,8 +17,6 @@ interface VoronoiCellProps {
     translateDepth?: number;
 }
 
-const SVG_WIDTH = 1920;
-const SVG_HEIGHT = 1080;
 const GAP_SCALE = 0.965;
 
 function gapTransform(cell: VoronoiCellData): string {
@@ -117,10 +115,10 @@ export default function VoronoiCell({
         return () => window.removeEventListener("mousemove", onMouseMove);
     }, [hasHover, scale, glareOpacity, strokeOpacity, x, y]);
 
-    const leftPct = (cell.x / SVG_WIDTH) * 100;
-    const topPct = (cell.y / SVG_HEIGHT) * 100;
-    const widthPct = (cell.width / SVG_WIDTH) * 100;
-    const heightPct = (cell.height / SVG_HEIGHT) * 100;
+    const leftPct = (cell.x / cell.canvasWidth) * 100;
+    const topPct = (cell.y / cell.canvasHeight) * 100;
+    const widthPct = (cell.width / cell.canvasWidth) * 100;
+    const heightPct = (cell.height / cell.canvasHeight) * 100;
 
     const t = gapTransform(cell);
 
