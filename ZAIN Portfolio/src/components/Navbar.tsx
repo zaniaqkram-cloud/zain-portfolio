@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const links = ["Home", "About", "Services", "Work", "Process", "Contact"];
+const links = ["Home", "About", "Services", "Content", "Process", "Contact"];
 
 const ease = [0.25, 0.1, 0.25, 1] as [number, number, number, number];
 
@@ -33,7 +33,7 @@ export default function Navbar() {
       Home: "hero",
       About: "about",
       Services: "services",
-      Work: "explorations",
+      Content: "explorations",
       Process: "process",
       Contact: "contact",
     };
