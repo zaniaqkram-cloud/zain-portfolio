@@ -88,7 +88,7 @@ export default function Hero() {
           >
             {roles[roleIndex]}
           </span>{" "}
-          For all your brand needs.
+          for all your brand needs.
         </p>
 
         <p className="blur-in text-xs sm:text-sm md:text-base text-white/60 max-w-xs sm:max-w-md mb-10 sm:mb-12">

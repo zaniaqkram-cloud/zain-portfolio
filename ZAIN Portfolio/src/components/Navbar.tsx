@@ -44,9 +44,8 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4">
       <div
-        className={`inline-flex items-center rounded-full backdrop-blur-md border border-white/10 bg-surface px-2 py-2 transition-shadow duration-300 ${
-          scrolled ? "shadow-md shadow-black/10" : ""
-        }`}
+        className={`inline-flex items-center rounded-full backdrop-blur-md border border-white/10 bg-surface px-2 py-2 transition-shadow duration-300 ${scrolled ? "shadow-md shadow-black/10" : ""
+          }`}
       >
         {/* Logo */}
         <button
@@ -73,11 +72,10 @@ export default function Navbar() {
             <button
               key={l}
               onClick={() => handleNav(l)}
-              className={`text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors duration-200 ${
-                active === l
+              className={`text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors duration-200 ${active === l
                   ? "text-text-primary bg-stroke/50"
                   : "text-muted hover:text-text-primary hover:bg-stroke/50"
-              }`}
+                }`}
             >
               {l}
             </button>
@@ -128,11 +126,10 @@ export default function Navbar() {
                   animate="visible"
                   exit="exit"
                   onClick={() => handleNav(l)}
-                  className={`min-h-[48px] text-center rounded-2xl px-8 py-3 text-lg transition-colors duration-200 ${
-                    active === l
+                  className={`min-h-[48px] text-center rounded-2xl px-8 py-3 text-lg transition-colors duration-200 ${active === l
                       ? "text-text-primary bg-stroke/50"
                       : "text-muted hover:text-text-primary hover:bg-stroke/50"
-                  }`}
+                    }`}
                 >
                   {l}
                 </motion.button>
