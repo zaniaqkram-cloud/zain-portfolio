@@ -66,7 +66,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative bg-black pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden"
+      className="relative bg-black pt-12 sm:pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden"
     >
       <div className="absolute inset-0 overflow-hidden">
         <video
@@ -99,7 +99,7 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 mb-16 md:mb-24">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 mb-12 sm:mb-16 md:mb-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -113,7 +113,7 @@ export default function Contact() {
                   Contact
                 </span>
               </div>
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-body font-light text-text-primary mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-body font-light text-text-primary mb-4">
                 Let's work{" "}
                 <span className="font-display italic">together</span>
               </h2>
@@ -186,7 +186,7 @@ export default function Contact() {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      className="w-full bg-surface/50 border border-stroke rounded-2xl px-5 py-3.5 text-sm text-text-primary placeholder:text-muted focus:outline-none focus:border-text-primary/30 transition-colors duration-200"
+                      className="w-full bg-surface/50 border border-stroke rounded-2xl px-5 py-3.5 min-h-[48px] text-sm text-text-primary placeholder:text-muted focus:outline-none focus:border-text-primary/30 transition-colors duration-200"
                     />
                   </div>
                   <div>
@@ -199,7 +199,7 @@ export default function Contact() {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="w-full bg-surface/50 border border-stroke rounded-2xl px-5 py-3.5 text-sm text-text-primary placeholder:text-muted focus:outline-none focus:border-text-primary/30 transition-colors duration-200"
+                      className="w-full bg-surface/50 border border-stroke rounded-2xl px-5 py-3.5 min-h-[48px] text-sm text-text-primary placeholder:text-muted focus:outline-none focus:border-text-primary/30 transition-colors duration-200"
                     />
                   </div>
                   <div>
@@ -212,12 +212,12 @@ export default function Contact() {
                       onChange={(e) =>
                         setFormData({ ...formData, message: e.target.value })
                       }
-                      className="w-full bg-surface/50 border border-stroke rounded-2xl px-5 py-3.5 text-sm text-text-primary placeholder:text-muted focus:outline-none focus:border-text-primary/30 transition-colors duration-200 resize-none"
+                      className="w-full bg-surface/50 border border-stroke rounded-2xl px-5 py-3.5 min-h-[48px] text-sm text-text-primary placeholder:text-muted focus:outline-none focus:border-text-primary/30 transition-colors duration-200 resize-none"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="group relative w-full rounded-2xl text-sm px-6 py-3.5 text-text-primary transition-all duration-300 overflow-hidden border border-stroke"
+                    className="group relative w-full rounded-2xl text-sm px-6 py-3.5 min-h-[48px] text-text-primary transition-all duration-300 overflow-hidden border border-stroke"
                   >
                     <span className="absolute inset-[-2px] rounded-2xl accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <span className="relative flex items-center justify-center gap-2 bg-bg rounded-2xl px-4 py-1.5">

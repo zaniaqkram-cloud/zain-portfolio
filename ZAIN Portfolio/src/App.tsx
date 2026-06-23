@@ -22,7 +22,7 @@ export default function App() {
         <LoadingScreen onComplete={() => setIsLoading(false)} />
       )}
       {!isLoading && (
-        <div className="bg-black min-h-screen w-full selection:bg-[#DC143C]/30">
+        <div className="bg-black min-h-screen w-full overflow-x-hidden selection:bg-[#DC143C]/30">
           <Navbar />
           <Suspense fallback={<SectionFallback />}>
             <Hero />

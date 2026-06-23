@@ -1,6 +1,19 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const links = ["Home", "About", "Services", "Work", "Process", "Contact"];
+
+const ease = [0.25, 0.1, 0.25, 1] as [number, number, number, number];
+
+const linkVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.05 * i, duration: 0.4, ease },
+  }),
+  exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
+};
 
 export default function Navbar() {
   const [active, setActive] = useState("Home");
@@ -53,7 +66,7 @@ export default function Navbar() {
         </button>
 
         {/* Desktop nav links */}
-        <div className="hidden sm:flex items-center">
+        <div className="hidden md:flex items-center">
           <span className="w-px h-5 bg-stroke mx-1" />
 
           {links.map((l) => (
@@ -86,7 +99,7 @@ export default function Navbar() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="sm:hidden flex flex-col items-center justify-center w-10 h-10 gap-[5px] px-2 py-2 rounded-full hover:bg-stroke/50 transition-colors"
+          className="md:hidden flex flex-col items-center justify-center w-10 h-10 min-w-[48px] min-h-[48px] gap-[5px] px-2 py-2 rounded-full hover:bg-stroke/50 transition-colors"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
           <span className={`block h-[2px] w-5 bg-text-primary rounded-full transition-transform duration-200 ${menuOpen ? "translate-y-[3.5px] rotate-45" : ""}`} />
@@ -95,38 +108,57 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu panel */}
-      {menuOpen && (
-        <div
-          className="fixed inset-x-4 top-20 sm:hidden rounded-3xl backdrop-blur-md border border-white/10 bg-surface/95 p-4 shadow-xl"
-        >
-          <div className="flex flex-col gap-1">
-            {links.map((l) => (
-              <button
-                key={l}
-                onClick={() => handleNav(l)}
-                className={`text-left rounded-2xl px-4 py-3 text-sm transition-colors duration-200 ${
-                  active === l
-                    ? "text-text-primary bg-stroke/50"
-                    : "text-muted hover:text-text-primary hover:bg-stroke/50"
-                }`}
+      {/* Mobile full-screen drawer */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 top-0 md:hidden bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center"
+          >
+            <div className="flex flex-col items-center gap-2">
+              {links.map((l, i) => (
+                <motion.button
+                  key={l}
+                  custom={i}
+                  variants={linkVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  onClick={() => handleNav(l)}
+                  className={`min-h-[48px] text-center rounded-2xl px-8 py-3 text-lg transition-colors duration-200 ${
+                    active === l
+                      ? "text-text-primary bg-stroke/50"
+                      : "text-muted hover:text-text-primary hover:bg-stroke/50"
+                  }`}
+                >
+                  {l}
+                </motion.button>
+              ))}
+              <motion.div
+                custom={links.length}
+                variants={linkVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="mt-6"
               >
-                {l}
-              </button>
-            ))}
-            <span className="h-px bg-stroke/50 my-2" />
-            <a
-              href="mailto:zaniaqkram@gmail.com"
-              className="group relative text-center rounded-2xl px-4 py-3 text-sm text-text-primary overflow-hidden border border-stroke"
-            >
-              <span className="absolute inset-[-2px] rounded-2xl accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="relative flex items-center justify-center gap-2 bg-bg rounded-2xl px-4 py-1.5">
-                Say hi <span className="text-xs">↗</span>
-              </span>
-            </a>
-          </div>
-        </div>
-      )}
+                <a
+                  href="mailto:zaniaqkram@gmail.com"
+                  className="group relative inline-flex items-center gap-2 rounded-full text-base px-8 py-4 min-h-[48px] text-text-primary overflow-hidden border border-stroke"
+                >
+                  <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative flex items-center gap-2 bg-bg rounded-full px-6 py-2">
+                    Say hi <span className="text-xs">↗</span>
+                  </span>
+                </a>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

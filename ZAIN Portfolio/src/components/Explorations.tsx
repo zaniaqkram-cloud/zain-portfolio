@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CircularGallery } from "./ui/circular-gallery-2";
 
@@ -31,12 +31,25 @@ const ALL_IMAGES = playgroundItems.map((item) => item.image);
 
 export default function Explorations() {
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const [bend, setBend] = useState(2.8);
+  const [galleryHeight, setGalleryHeight] = useState(650);
+
+  useEffect(() => {
+    function onResize() {
+      const w = window.innerWidth;
+      setBend(w < 768 ? 1.2 : w < 1024 ? 2.0 : 2.8);
+      setGalleryHeight(w < 768 ? 400 : w < 1024 ? 500 : 650);
+    }
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
     <section id="explorations" className="relative w-full bg-black">
 
       {/* ── Section Header ─────────────────────────────────────────────────── */}
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 pt-20 md:pt-32 pb-12">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 pt-16 sm:pt-20 md:pt-32 pb-8 sm:pb-12">
         <div className="mb-8 text-left">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-px bg-neutral-800" />
@@ -44,7 +57,7 @@ export default function Explorations() {
               Explorations
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-body font-light text-white mb-2">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-body font-light text-white mb-2">
             Visual{" "}
             <span className="font-display italic text-[#FFFFFF]">Playground</span>
           </h2>
@@ -56,10 +69,13 @@ export default function Explorations() {
       </div>
 
       {/* ── WebGL Circular Gallery ──────────────────────────────────────────── */}
-      <div className="relative h-[650px] w-full overflow-hidden bg-transparent">
+      <div
+        className="relative w-full overflow-hidden bg-transparent"
+        style={{ height: galleryHeight }}
+      >
         <CircularGallery
           items={playgroundItems}
-          bend={2.8}
+          bend={bend}
           borderRadius={0.04}
           scrollEase={0.03}
           className="text-[#9B111E] dark:text-[#E63946] font-extrabold tracking-wider"

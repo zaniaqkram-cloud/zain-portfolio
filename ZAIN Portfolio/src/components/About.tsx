@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 
 export default function About() {
   return (
-    <section id="about" className="bg-black py-16 md:py-24">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+    <section id="about" className="bg-black py-12 sm:py-16 md:py-24">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-12 md:gap-16 items-center">
 
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -42,7 +42,7 @@ export default function About() {
                 About
               </span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-body font-light text-text-primary mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-body font-light text-text-primary mb-6">
               Creative Designer based in{" "}
               <span className="font-display italic">Lahore</span>
             </h2>

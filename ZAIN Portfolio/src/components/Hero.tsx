@@ -70,17 +70,17 @@ export default function Hero() {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-6">
+      <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-4 sm:px-6">
 
-        <span className="blur-in text-xs text-white/60 uppercase tracking-[0.3em] mb-8">
+        <span className="blur-in text-[10px] sm:text-xs text-white/60 uppercase tracking-[0.3em] mb-6 sm:mb-8">
           COLLECTION '26
         </span>
 
-        <h1 className="name-reveal text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight text-text-primary mb-6">
+        <h1 className="name-reveal text-[2.5rem] sm:text-5xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight text-text-primary mb-4 sm:mb-6">
           Zain Akram
         </h1>
 
-        <p className="blur-in text-base md:text-lg text-white/60 mb-4">
+        <p className="blur-in text-sm sm:text-base md:text-lg text-white/60 mb-3 sm:mb-4">
           A{" "}
           <span
             key={roleIndex}
@@ -91,17 +91,17 @@ export default function Hero() {
           lives in Lahore.
         </p>
 
-        <p className="blur-in text-sm md:text-base text-white/60 max-w-md mb-12">
+        <p className="blur-in text-xs sm:text-sm md:text-base text-white/60 max-w-xs sm:max-w-md mb-10 sm:mb-12">
           Designing seamless digital interactions by focusing on the unique
           nuances which bring systems to life.
         </p>
 
         {/* CTA Buttons */}
-        <div className="blur-in flex flex-col sm:flex-row gap-3 sm:gap-4 pointer-events-auto">
+        <div className="blur-in flex flex-col sm:flex-row gap-3 sm:gap-4 pointer-events-auto w-full sm:w-auto max-w-xs sm:max-w-none">
           <a
             href="#explorations"
             style={{ pointerEvents: "auto" }}
-            className="group relative rounded-full text-sm px-7 py-3.5 bg-text-primary text-bg hover:bg-bg hover:text-text-primary transition-all duration-300 hover:scale-105 overflow-hidden"
+            className="group relative rounded-full text-sm px-7 py-3.5 min-h-[48px] flex items-center justify-center bg-text-primary text-bg hover:bg-bg hover:text-text-primary transition-all duration-300 hover:scale-105 overflow-hidden"
           >
             <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative">See Works</span>
@@ -109,7 +109,7 @@ export default function Hero() {
           <a
             href="mailto:zaniaqkram@gmail.com"
             style={{ pointerEvents: "auto" }}
-            className="group relative rounded-full text-sm px-7 py-3.5 border-2 border-stroke bg-bg text-text-primary hover:border-transparent transition-all duration-300 hover:scale-105 overflow-hidden"
+            className="group relative rounded-full text-sm px-7 py-3.5 min-h-[48px] flex items-center justify-center border-2 border-stroke bg-bg text-text-primary hover:border-transparent transition-all duration-300 hover:scale-105 overflow-hidden"
           >
             <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative">Reach out...</span>
