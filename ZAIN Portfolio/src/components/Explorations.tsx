@@ -25,6 +25,9 @@ const playgroundItems = [
   { image: "/play20.jpg", text: "Exploration 20" },
   { image: "/play21.jpg", text: "Exploration 21" },
   { image: "/play22.jpg", text: "Exploration 22" },
+  { image: "/play23.jpg", text: "Exploration 23" },
+  { image: "/play24.jpg", text: "Exploration 24" },
+  { image: "/play25.jpg", text: "Exploration 25" },
 ];
 
 const ALL_IMAGES = playgroundItems.map((item) => item.image);
