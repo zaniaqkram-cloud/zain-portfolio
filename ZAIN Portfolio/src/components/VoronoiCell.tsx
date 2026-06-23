@@ -13,6 +13,11 @@ import { useHasHover } from "../lib/useHasHover";
 
 interface VoronoiCellProps {
     cell: VoronoiCellData;
+    canvasScale: number;
+    offsetX: number;
+    offsetY: number;
+    viewportW: number;
+    viewportH: number;
     rotateDepth?: number;
     translateDepth?: number;
 }
@@ -27,6 +32,11 @@ function gapTransform(cell: VoronoiCellData): string {
 
 export default function VoronoiCell({
     cell,
+    canvasScale,
+    offsetX,
+    offsetY,
+    viewportW,
+    viewportH,
     rotateDepth = 14,
     translateDepth = 6,
 }: VoronoiCellProps) {
@@ -115,10 +125,10 @@ export default function VoronoiCell({
         return () => window.removeEventListener("mousemove", onMouseMove);
     }, [hasHover, scale, glareOpacity, strokeOpacity, x, y]);
 
-    const leftPct = (cell.x / cell.canvasWidth) * 100;
-    const topPct = (cell.y / cell.canvasHeight) * 100;
-    const widthPct = (cell.width / cell.canvasWidth) * 100;
-    const heightPct = (cell.height / cell.canvasHeight) * 100;
+    const leftPct = ((cell.x * canvasScale - offsetX) / viewportW) * 100;
+    const topPct = ((cell.y * canvasScale - offsetY) / viewportH) * 100;
+    const widthPct = (cell.width * canvasScale / viewportW) * 100;
+    const heightPct = (cell.height * canvasScale / viewportH) * 100;
 
     const t = gapTransform(cell);
 

@@ -1,32 +1,22 @@
-import { useEffect, useState, useRef } from "react";
-import {
-  generateVoronoiCells,
-  type VoronoiCellData,
-} from "./voronoiCells";
+import { useState, useEffect } from "react";
+import { voronoiCells } from "./voronoiCells";
 import VoronoiCell from "./VoronoiCell";
 
+const ORIGINAL_W = 1920;
+const ORIGINAL_H = 1080;
+
 export default function HeroVoronoiBackground() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [cells, setCells] = useState<VoronoiCellData[]>([]);
+  const [vw, setVw] = useState(window.innerWidth);
+  const [vh, setVh] = useState(window.innerHeight);
 
   useEffect(() => {
-    const updateCells = () => {
-      const el = containerRef.current;
-      if (!el) return;
-      const w = el.clientWidth;
-      const h = el.clientHeight;
-      if (w === 0 || h === 0) return;
-      setCells(generateVoronoiCells(w, h));
-    };
-
-    updateCells();
-
-    updateCells();
-
     let timer: ReturnType<typeof setTimeout>;
     const handler = () => {
       clearTimeout(timer);
-      timer = setTimeout(updateCells, 160);
+      timer = setTimeout(() => {
+        setVw(window.innerWidth);
+        setVh(window.innerHeight);
+      }, 80);
     };
     window.addEventListener("resize", handler);
     return () => {
@@ -35,8 +25,14 @@ export default function HeroVoronoiBackground() {
     };
   }, []);
 
+  // Uniform "cover" scale so the 1920×1080 canvas fills the viewport
+  // without stretching cells on portrait screens
+  const scale = Math.max(vw / ORIGINAL_W, vh / ORIGINAL_H);
+  const offsetX = (ORIGINAL_W * scale - vw) / 2;
+  const offsetY = (ORIGINAL_H * scale - vh) / 2;
+
   return (
-    <div ref={containerRef} className="bg-[#73060E] w-full h-full">
+    <div className="bg-[#73060E] w-full h-full">
       {/* Base radial gradient matching the original SVG background */}
       <div
         className="absolute inset-0"
@@ -46,7 +42,7 @@ export default function HeroVoronoiBackground() {
         }}
       />
 
-      {/* Subtle noise texture */}
+      {/* Subtle noise texture — invisible alone, but gives the glass cells something to blur */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none"
         style={{ opacity: 0.025, mixBlendMode: "overlay" }}
@@ -64,14 +60,22 @@ export default function HeroVoronoiBackground() {
         <rect width="100%" height="100%" filter="url(#bg-noise)" />
       </svg>
 
-      {/* Voronoi cells */}
+      {/* Container that mimics the 1920x1080 SVG canvas, scaled responsively */}
       <div className="absolute inset-0">
-        {cells.map((cell) => (
-          <VoronoiCell key={cell.id} cell={cell} />
+        {voronoiCells.map((cell) => (
+          <VoronoiCell
+            key={cell.id}
+            cell={cell}
+            canvasScale={scale}
+            offsetX={offsetX}
+            offsetY={offsetY}
+            viewportW={vw}
+            viewportH={vh}
+          />
         ))}
       </div>
 
-      {/* Gradient overlay into dark section below */}
+      {/* This gradient overlay merges the cells into your bottom dark section */}
       <div
         className="absolute left-0 bottom-0 w-full h-48 pointer-events-none"
         style={{
