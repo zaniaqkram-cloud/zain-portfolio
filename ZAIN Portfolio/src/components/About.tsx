@@ -47,10 +47,15 @@ export default function About() {
             </div>
 
             {/* FIXED HEADING LAYOUT */}
-            <h2 className="flex flex-wrap items-baseline gap-x-[0.25em] text-2xl sm:text-3xl md:text-5xl font-body font-light text-text-primary mb-6">
-              <RevealText as="span">Creative Designer based in</RevealText>
-              <span className="font-display italic">
-                <RevealText as="span">Lahore</RevealText>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-body font-light text-text-primary mb-6 whitespace-normal">
+              <span className="inline-block mr-[0.25em]">
+                <RevealText as="span">Creative Designer</RevealText>
+              </span>
+              <span className="inline-flex items-baseline gap-x-[0.25em] whitespace-nowrap">
+                <RevealText as="span">based in</RevealText>
+                <span className="font-display italic">
+                  <RevealText as="span">Lahore</RevealText>
+                </span>
               </span>
             </h2>
 
