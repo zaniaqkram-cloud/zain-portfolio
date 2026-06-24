@@ -1,13 +1,22 @@
 import { useState, useEffect } from "react";
+import { useMotionValue, useTransform, motion } from "framer-motion";
 import { voronoiCells } from "./voronoiCells";
 import VoronoiCell from "./VoronoiCell";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ORIGINAL_W = 1920;
 const ORIGINAL_H = 1080;
+const CANVAS_CENTER_X = ORIGINAL_W / 2;
+const CANVAS_CENTER_Y = ORIGINAL_H / 2;
 
 export default function HeroVoronoiBackground() {
   const [vw, setVw] = useState(window.innerWidth);
   const [vh, setVh] = useState(window.innerHeight);
+
+  const scrollProgress = useMotionValue(0);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -25,15 +34,30 @@ export default function HeroVoronoiBackground() {
     };
   }, []);
 
-  // Uniform "cover" scale so the 1920×1080 canvas fills the viewport
-  // without stretching cells on portrait screens
+  useEffect(() => {
+    const hero = document.querySelector("#hero");
+    if (!hero) return;
+
+    const trigger = ScrollTrigger.create({
+      trigger: hero,
+      start: "top top",
+      end: "bottom top",
+      onUpdate: (self) => {
+        scrollProgress.set(self.progress);
+      },
+    });
+
+    return () => trigger.kill();
+  }, [scrollProgress]);
+
+  const overlayOpacity = useTransform(scrollProgress, [0.35, 1], [0, 1]);
+
   const scale = Math.max(vw / ORIGINAL_W, vh / ORIGINAL_H);
   const offsetX = (ORIGINAL_W * scale - vw) / 2;
   const offsetY = (ORIGINAL_H * scale - vh) / 2;
 
   return (
     <div className="bg-[#73060E] w-full h-full">
-      {/* Base radial gradient matching the original SVG background */}
       <div
         className="absolute inset-0"
         style={{
@@ -42,7 +66,6 @@ export default function HeroVoronoiBackground() {
         }}
       />
 
-      {/* Subtle noise texture — invisible alone, but gives the glass cells something to blur */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none"
         style={{ opacity: 0.025, mixBlendMode: "overlay" }}
@@ -60,7 +83,6 @@ export default function HeroVoronoiBackground() {
         <rect width="100%" height="100%" filter="url(#bg-noise)" />
       </svg>
 
-      {/* Container that mimics the 1920x1080 SVG canvas, scaled responsively */}
       <div className="absolute inset-0">
         {voronoiCells.map((cell) => (
           <VoronoiCell
@@ -71,11 +93,18 @@ export default function HeroVoronoiBackground() {
             offsetY={offsetY}
             viewportW={vw}
             viewportH={vh}
+            scrollProgress={scrollProgress}
+            canvasCenterX={CANVAS_CENTER_X}
+            canvasCenterY={CANVAS_CENTER_Y}
           />
         ))}
       </div>
 
-      {/* This gradient overlay merges the cells into your bottom dark section */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{ backgroundColor: "#000", opacity: overlayOpacity }}
+      />
+
       <div
         className="absolute left-0 bottom-0 w-full h-48 pointer-events-none"
         style={{
