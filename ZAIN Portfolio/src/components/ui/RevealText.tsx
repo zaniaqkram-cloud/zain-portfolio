@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
 
 interface RevealTextProps {
@@ -21,25 +21,52 @@ export default function RevealText({
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
+  const words = children.split(" ");
+  const elements: ReactNode[] = [];
+  let charIdx = 0;
+
+  words.forEach((word, wi) => {
+    if (wi > 0) {
+      elements.push(
+        <span
+          key={`sp-${wi}`}
+          className="inline-block"
+          style={{ width: "0.25em" }}
+        />,
+      );
+    }
+    const chars = word.split("").map((char) => {
+      const i = charIdx++;
+      return (
+        <motion.span
+          key={i}
+          className="inline-block"
+          initial={{ y: "100%" }}
+          animate={inView ? { y: 0 } : { y: "100%" }}
+          transition={{
+            duration,
+            ease: [0.25, 0.1, 0.25, 1],
+            delay: delay + i * stagger,
+          }}
+        >
+          {char}
+        </motion.span>
+      );
+    });
+    elements.push(
+      <span key={`w-${wi}`} className="inline-block whitespace-nowrap">
+        {chars}
+      </span>,
+    );
+  });
+
   return (
     <Tag ref={ref as never} className={className}>
-      <span style={{ display: "inline-block", overflow: "hidden" }}>
-        {children.split("").map((char, i) => (
-          <motion.span
-            key={i}
-            className="inline-block"
-            style={{ whiteSpace: char === " " ? "pre" : undefined }}
-            initial={{ y: "100%" }}
-            animate={inView ? { y: 0 } : { y: "100%" }}
-            transition={{
-              duration,
-              ease: [0.25, 0.1, 0.25, 1],
-              delay: delay + i * stagger,
-            }}
-          >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
-        ))}
+      <span
+        className="inline-block overflow-hidden"
+        style={{ paddingBottom: "0.15em", marginBottom: "-0.15em" }}
+      >
+        {elements}
       </span>
     </Tag>
   );
