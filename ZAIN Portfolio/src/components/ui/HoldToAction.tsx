@@ -6,9 +6,10 @@ interface HoldToActionProps {
   children: React.ReactNode;
   className?: string;
   innerClassName?: string;
+  onMouseEnter?: () => void;
 }
 
-export default function HoldToAction({ href, children, className, innerClassName = "bg-surface rounded-full px-3 py-1 backdrop-blur-md" }: HoldToActionProps) {
+export default function HoldToAction({ href, children, className, innerClassName = "bg-surface rounded-full px-3 py-1 backdrop-blur-md", onMouseEnter }: HoldToActionProps) {
   const progress = useMotionValue(0);
   const animRef = useRef<ReturnType<typeof animate> | null>(null);
   const completedRef = useRef(false);
@@ -55,6 +56,7 @@ export default function HoldToAction({ href, children, className, innerClassName
       onMouseLeave={endHold}
       onTouchEnd={endHold}
       onTouchCancel={endHold}
+      onMouseEnter={onMouseEnter}
       onClick={(e) => {
         if (!completedRef.current) e.preventDefault();
       }}

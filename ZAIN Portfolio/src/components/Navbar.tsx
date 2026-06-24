@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import HoldToAction from "./ui/HoldToAction";
+import { useHoverSound } from "@/hooks/useHoverSound";
 
 const links = ["Home", "About", "Services", "Content", "Process", "Contact"];
 
@@ -20,6 +21,7 @@ export default function Navbar() {
   const [active, setActive] = useState("Home");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const playHover = useHoverSound();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 100);
@@ -51,6 +53,7 @@ export default function Navbar() {
         {/* Logo */}
         <button
           onClick={() => handleNav("Home")}
+          onMouseEnter={playHover}
           className="group relative w-10 h-10 rounded-full p-[1px] transition-transform duration-300 hover:scale-110 shrink-0"
           style={{
             background: "linear-gradient(90deg, #42040A 0%, #A80A19 100%)",
@@ -73,6 +76,7 @@ export default function Navbar() {
             <button
               key={l}
               onClick={() => handleNav(l)}
+              onMouseEnter={playHover}
               className={`text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors duration-200 ${active === l
                   ? "text-text-primary bg-stroke/50"
                   : "text-muted hover:text-text-primary hover:bg-stroke/50"
@@ -86,6 +90,7 @@ export default function Navbar() {
 
           <HoldToAction
             href="mailto:zaniaqkram@gmail.com"
+            onMouseEnter={playHover}
             className="group relative text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 text-text-primary overflow-hidden"
           >
             Say hi <span className="text-xs">↗</span>
@@ -123,6 +128,7 @@ export default function Navbar() {
                   initial="hidden"
                   animate="visible"
                   exit="exit"
+                  onMouseEnter={playHover}
                   onClick={() => handleNav(l)}
                   className={`min-h-[48px] text-center rounded-2xl px-8 py-3 text-lg transition-colors duration-200 ${active === l
                       ? "text-text-primary bg-stroke/50"
@@ -142,6 +148,7 @@ export default function Navbar() {
               >
                 <HoldToAction
                   href="mailto:zaniaqkram@gmail.com"
+                  onMouseEnter={playHover}
                   className="group relative inline-flex items-center gap-2 rounded-full text-base px-8 py-4 min-h-[48px] text-text-primary overflow-hidden border border-stroke"
                   innerClassName="flex items-center gap-2 bg-bg rounded-full px-6 py-2"
                 >
