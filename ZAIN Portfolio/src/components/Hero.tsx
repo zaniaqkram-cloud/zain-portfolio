@@ -2,6 +2,7 @@ import HeroVoronoiBackground from "./HeroVoronoiBackground";
 import { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 import gsap from "gsap";
+import RevealText from "./ui/RevealText";
 
 const HLS_SRC =
   "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
@@ -34,26 +35,14 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, []);
 
-  // GSAP entrance
+  // GSAP entrance for non-title elements
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.fromTo(
-        ".name-reveal",
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1.2, delay: 0.1 }
-      );
-      tl.fromTo(
         ".blur-in",
         { opacity: 0, filter: "blur(10px)", y: 20 },
-        {
-          opacity: 1,
-          filter: "blur(0px)",
-          y: 0,
-          duration: 1,
-          stagger: 0.1,
-        },
-        "-=0.9"
+        { opacity: 1, filter: "blur(0px)", y: 0, duration: 1, stagger: 0.1, delay: 0.3 }
       );
     }, sectionRef);
     return () => ctx.revert();
@@ -76,8 +65,8 @@ export default function Hero() {
           COLLECTION '26
         </span>
 
-        <h1 className="name-reveal text-[2.5rem] sm:text-5xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight text-text-primary mb-4 sm:mb-6">
-          Zain Akram
+        <h1 className="text-[2.5rem] sm:text-5xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight text-text-primary mb-4 sm:mb-6">
+          <RevealText as="span" duration={0.7}>Zain Akram</RevealText>
         </h1>
 
         <p className="blur-in text-sm sm:text-base md:text-lg text-white/60 mb-3 sm:mb-4">

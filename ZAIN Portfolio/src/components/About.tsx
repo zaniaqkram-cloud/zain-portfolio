@@ -1,5 +1,6 @@
 import { CometCard } from "./ui/comet-card";
 import { motion } from "framer-motion";
+import RevealText from "./ui/RevealText";
 
 export default function About() {
   return (
@@ -43,8 +44,8 @@ export default function About() {
               </span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-body font-light text-text-primary mb-6">
-              Creative Designer based in{" "}
-              <span className="font-display italic">Lahore</span>
+              <RevealText as="span">Creative Designer based in </RevealText>
+              <span className="font-display italic"><RevealText as="span">Lahore</RevealText></span>
             </h2>
             <p className="text-sm md:text-base text-muted leading-relaxed mb-6">
               I'm Zain Akram - a multidisciplinary designer crafting digital

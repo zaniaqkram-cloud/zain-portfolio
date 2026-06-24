@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import RevealText from "./ui/RevealText";
 
 interface Service {
   title: string;
@@ -58,12 +59,12 @@ export default function Services() {
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-px bg-stroke" />
             <span className="text-xs text-muted uppercase tracking-[0.3em]">
-              What I Do
+              <RevealText>What I Do</RevealText>
             </span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-body font-light text-text-primary">
-            Services &{" "}
-            <span className="font-display italic">Expertise</span>
+            <RevealText as="span">Services & </RevealText>
+            <span className="font-display italic"><RevealText as="span">Expertise</RevealText></span>
           </h2>
         </motion.div>
 

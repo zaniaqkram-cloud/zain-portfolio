@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import RevealText from "./ui/RevealText";
 
 const steps = [
   {
@@ -52,8 +53,8 @@ export default function Process() {
             </span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-body font-light text-text-primary">
-            How I{" "}
-            <span className="font-display italic">Work</span>
+            <RevealText as="span">How I </RevealText>
+            <span className="font-display italic"><RevealText as="span">Work</RevealText></span>
           </h2>
         </motion.div>
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CircularGallery } from "./ui/circular-gallery-2";
+import RevealText from "./ui/RevealText";
 
 const playgroundItems = [
   { image: "/play1.webp", text: "Exploration 01" },
@@ -57,12 +58,12 @@ export default function Explorations() {
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-px bg-neutral-800" />
             <span className="text-xs text-neutral-400 uppercase tracking-[0.3em]">
-              Explorations
+              <RevealText>Explorations</RevealText>
             </span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-body font-light text-white mb-2">
-            Visual{" "}
-            <span className="font-display italic text-[#FFFFFF]">Playground</span>
+            <RevealText as="span">Visual </RevealText>
+            <span className="font-display italic text-[#FFFFFF]"><RevealText as="span">Playground</RevealText></span>
           </h2>
           <p className="text-sm md:text-base text-neutral-400 max-w-md">
             A collection of experimental visual work, personal projects, and

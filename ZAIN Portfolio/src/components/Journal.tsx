@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import RevealText from "./ui/RevealText";
 
 const entries = [
   {
@@ -53,8 +54,8 @@ export default function Journal() {
           <div className="flex items-end justify-between">
             <div>
               <h2 className="text-3xl md:text-5xl font-body font-light text-text-primary mb-3">
-                Recent{" "}
-                <span className="font-display italic">thoughts</span>
+                <RevealText as="span">Recent </RevealText>
+                <span className="font-display italic"><RevealText as="span">thoughts</RevealText></span>
               </h2>
               <p className="text-sm md:text-base text-muted max-w-lg">
                 Musings on design, development, and creative process.

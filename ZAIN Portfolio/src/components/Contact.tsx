@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 import gsap from "gsap";
 import { motion } from "framer-motion";
+import RevealText from "./ui/RevealText";
 
 const HLS_SRC =
   "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
@@ -114,8 +115,8 @@ export default function Contact() {
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-body font-light text-text-primary mb-4">
-                Let's work{" "}
-                <span className="font-display italic">together</span>
+                <RevealText as="span">Let's work </RevealText>
+                <span className="font-display italic"><RevealText as="span">together</RevealText></span>
               </h2>
               <p className="text-sm md:text-base text-muted max-w-md mb-8">
                 Have a project in mind? Let's create something extraordinary.

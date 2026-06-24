@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import RevealText from "./ui/RevealText";
 
 const projects = [
   {
@@ -47,14 +48,14 @@ export default function SelectedWorks() {
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-px bg-stroke" />
             <span className="text-xs text-muted uppercase tracking-[0.3em]">
-              Selected Work
+              <RevealText>Selected Work</RevealText>
             </span>
           </div>
           <div className="flex items-end justify-between">
             <div>
               <h2 className="text-3xl md:text-5xl font-body font-light text-text-primary mb-3">
-                Featured{" "}
-                <span className="font-display italic">projects</span>
+                <RevealText as="span">Featured </RevealText>
+                <span className="font-display italic"><RevealText as="span">projects</RevealText></span>
               </h2>
               <p className="text-sm md:text-base text-muted max-w-lg">
                 A selection of projects I've worked on, from concept to
