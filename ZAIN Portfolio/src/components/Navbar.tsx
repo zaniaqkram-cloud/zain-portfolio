@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import HoldToAction from "./ui/HoldToAction";
 
 const links = ["Home", "About", "Services", "Content", "Process", "Contact"];
 
@@ -83,15 +84,12 @@ export default function Navbar() {
 
           <span className="w-px h-5 bg-stroke mx-1" />
 
-          <a
+          <HoldToAction
             href="mailto:zaniaqkram@gmail.com"
             className="group relative text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 text-text-primary overflow-hidden"
           >
-            <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <span className="relative flex items-center gap-1 bg-surface rounded-full px-3 py-1 backdrop-blur-md">
-              Say hi <span className="text-xs">↗</span>
-            </span>
-          </a>
+            Say hi <span className="text-xs">↗</span>
+          </HoldToAction>
         </div>
 
         {/* Mobile hamburger */}
@@ -142,15 +140,13 @@ export default function Navbar() {
                 exit="exit"
                 className="mt-6"
               >
-                <a
+                <HoldToAction
                   href="mailto:zaniaqkram@gmail.com"
                   className="group relative inline-flex items-center gap-2 rounded-full text-base px-8 py-4 min-h-[48px] text-text-primary overflow-hidden border border-stroke"
+                  innerClassName="flex items-center gap-2 bg-bg rounded-full px-6 py-2"
                 >
-                  <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="relative flex items-center gap-2 bg-bg rounded-full px-6 py-2">
-                    Say hi <span className="text-xs">↗</span>
-                  </span>
-                </a>
+                  Say hi <span className="text-xs">↗</span>
+                </HoldToAction>
               </motion.div>
             </div>
           </motion.div>
