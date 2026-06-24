@@ -8,6 +8,7 @@ export default function About() {
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-12 md:gap-16 items-center">
 
+          {/* Left Column - Image Card */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -31,6 +32,7 @@ export default function About() {
             <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full accent-gradient opacity-20 blur-2xl pointer-events-none" />
           </motion.div>
 
+          {/* Right Column - Text Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -43,16 +45,21 @@ export default function About() {
                 About
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-body font-light text-text-primary mb-6">
-              <RevealText as="span">Creative Designer based in </RevealText>
-              <span className="font-display italic"><RevealText as="span">Lahore</RevealText></span>
+
+            {/* FIXED HEADING LAYOUT */}
+            <h2 className="flex flex-wrap items-baseline gap-x-[0.25em] text-2xl sm:text-3xl md:text-5xl font-body font-light text-text-primary mb-6">
+              <RevealText as="span">Creative Designer based in</RevealText>
+              <span className="font-display italic">
+                <RevealText as="span">Lahore</RevealText>
+              </span>
             </h2>
+
             <p className="text-sm md:text-base text-muted leading-relaxed mb-6">
               I'm Zain Akram - a multidisciplinary designer crafting digital
               experiences that blend thoughtful design with purposeful
               interaction. With expertise spanning UI/UX, brand identity, and
               video editing, I bring ideas to life through clean aesthetics and
-              meticulous detail.
+              meticululous detail.
             </p>
             <p className="text-sm md:text-base text-muted leading-relaxed mb-8">
               Every project is an opportunity to push creative boundaries and
