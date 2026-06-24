@@ -20,7 +20,7 @@ export default function About() {
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <img
-                  src="/zain-card.png"
+                  src="/zain-card.webp"
                   alt="Zain Akram"
                   className="w-full h-full object-cover"
                   style={{ transform: "translateZ(40px)" }}
