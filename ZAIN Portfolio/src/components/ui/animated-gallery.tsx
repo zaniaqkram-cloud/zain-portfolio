@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import {
     HTMLMotionProps,
@@ -6,7 +8,7 @@ import {
     motion,
     useScroll,
     useTransform,
-} from "framer-motion" // Changed to match your framer-motion setup
+} from "motion/react"
 
 import { cn } from "@/lib/utils"
 
@@ -61,7 +63,7 @@ export const ContainerScroll = ({
         <ContainerScrollContext.Provider value={{ scrollYProgress }}>
             <div
                 ref={scrollRef}
-                className={cn("relative min-h-[180vh] w-full bg-black", className)}
+                className={cn("relative min-h-[120vh]", className)}
                 style={{
                     perspective: "1000px",
                     perspectiveOrigin: "center top",
@@ -85,7 +87,7 @@ export const ContainerSticky = ({
     return (
         <div
             className={cn(
-                "sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-black",
+                "sticky left-0 top-0 min-h-[30rem] w-full overflow-hidden",
                 className
             )}
             style={{
@@ -108,8 +110,8 @@ export const GalleryContainer = ({
     ...props
 }: React.HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div">) => {
     const { scrollYProgress } = useContainerScrollContext()
-    const rotateX = useTransform(scrollYProgress, [0, 0.5], [15, 0])
-    const scale = useTransform(scrollYProgress, [0, 0.5], [1.15, 1])
+    const rotateX = useTransform(scrollYProgress, [0, 0.5], [75, 0])
+    const scale = useTransform(scrollYProgress, [0.5, 0.9], [1.2, 1])
 
     return (
         <motion.div
