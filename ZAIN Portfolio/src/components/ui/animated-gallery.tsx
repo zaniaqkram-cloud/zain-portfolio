@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 import {
     HTMLMotionProps,
@@ -116,7 +114,7 @@ export const GalleryContainer = ({
     return (
         <motion.div
             className={cn(
-                "relative grid size-full grid-cols-3 gap-2 rounded-2xl",
+                "relative grid size-full grid-cols-3 gap-[0.4rem] sm:gap-2 rounded-2xl",
                 className
             )}
             style={{
@@ -145,7 +143,7 @@ export const GalleryCol = ({
 
     return (
         <motion.div
-            className={cn("relative flex w-full flex-col gap-2 ", className)}
+            className={cn("relative flex w-full flex-col gap-[0.4rem] sm:gap-2", className)}
             style={{
                 y,
                 ...style,
@@ -186,7 +184,7 @@ export const ContainerAnimated = React.forwardRef<
             ref={ref}
             className={cn(className)}
             variants={blurVariants}
-            transition={SPRING_CONFIG || transition}
+            transition={transition ?? SPRING_CONFIG}
             {...props}
         />
     )
