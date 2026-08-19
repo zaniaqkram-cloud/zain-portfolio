@@ -281,7 +281,7 @@ class Media {
 
   createShader() {
     const texture = new Texture(this.gl, {
-      generateMipmaps: true,
+      generateMipmaps: false, // Changed from true to false for local images
     });
 
     this.program = new Program(this.gl, {
@@ -350,7 +350,7 @@ class Media {
     });
 
     const img = new Image();
-    img.crossOrigin = "anonymous";
+    // Removed crossOrigin="anonymous" to allow local file loading
     img.src = this.image;
     img.onload = () => {
       texture.image = img;
@@ -358,6 +358,11 @@ class Media {
         img.naturalWidth,
         img.naturalHeight,
       ];
+    };
+
+    // Optional: Log an error to the console if an image path is wrong
+    img.onerror = () => {
+      console.error(`Failed to load image: ${this.image}`);
     };
   }
 
