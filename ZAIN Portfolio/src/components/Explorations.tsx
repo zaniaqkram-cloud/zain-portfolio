@@ -2,6 +2,7 @@ import { CircularGallery } from "@/components/ui/circular-gallery-2";
 
 // Tailored portfolio items pointing to your local public folder assets
 const portfolioItems = [
+  // --- PREVIOUS IMAGES (1-25) ---
   { image: "/play1.webp", text: "EV Scooter App" },
   { image: "/play2.webp", text: "Brand Identity" },
   { image: "/play3.webp", text: "Canvas Painting" },
@@ -27,6 +28,18 @@ const portfolioItems = [
   { image: "/play23.webp", text: "Automotive Render" },
   { image: "/play24.webp", text: "SketchUp Space" },
   { image: "/play25.webp", text: "Design System" },
+  // --- NEWLY ADDED IMAGES (26-36) ---
+  { image: "/play26.webp", text: "AE7 Launch Teaser" },
+  { image: "/play27.webp", text: "AE4 Studio Render" },
+  { image: "/play28.webp", text: "Elevate Campaign" },
+  { image: "/play29.webp", text: "Pop Art Promo" },
+  { image: "/play30.webp", text: "AE6+ Spec Sheet" },
+  { image: "/play31.webp", text: "Mobility App Concept" },
+  { image: "/play32.webp", text: "Motorcycle Launch" },
+  { image: "/play33.webp", text: "Concrete Shadow Render" },
+  { image: "/play34.webp", text: "Cyberpunk Aesthetic" },
+  { image: "/play35.webp", text: "Infographic Layout" },
+  { image: "/play36.webp", text: "Corporate Comparison" },
 ];
 
 export default function VisualPlayground() {
